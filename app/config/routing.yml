@@ -1,3 +1,11 @@
+api_talent:
+    resource: "@ApiTalentBundle/Resources/config/routing.xml"
+    prefix:   /
+
+app_talent:
+    resource: "@AppTalentBundle/Resources/config/routing.xml"
+    prefix:   /
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
