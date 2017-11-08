@@ -6,7 +6,7 @@
 
     <!--
     <services>
-        <service id="api_talent.example" class="Api\TalentBundle\Example">
+        <service id="aume_blog.example" class="Aume\BlogBundle\Example">
             <argument type="service" id="service_id" />
             <argument>plain_value</argument>
             <argument>%parameter_name%</argument>
