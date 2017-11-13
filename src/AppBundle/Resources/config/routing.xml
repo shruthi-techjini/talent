@@ -7,4 +7,10 @@
     <route id="home" path="/">
         <default key="_controller">AppBundle:Default:index</default>
     </route>
+    <route id="test" path="/test">
+        <default key="_controller">AppBundle:Test:index</default>
+    </route>
+    <route id="register" path="/signup">
+        <default key="_controller">AppBundle:Register:signup</default>
+    </route>
 </routes>
