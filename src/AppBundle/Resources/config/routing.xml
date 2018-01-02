@@ -13,4 +13,7 @@
     <route id="register" path="/signup">
         <default key="_controller">AppBundle:Register:signup</default>
     </route>
+    <route id="api_register" path="/api/signup" methods="post">
+        <default key="_controller">AppBundle:ApiRegister:register</default>
+    </route>
 </routes>

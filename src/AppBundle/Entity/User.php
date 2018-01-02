@@ -2,6 +2,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * 
@@ -23,6 +24,7 @@ class User{
     /**
      * @var string
      * @ORM\Column(name="first_name", type="string", length=100)
+     * @Assert\NotBlank()
      */
     private $firstName;
 
@@ -146,9 +148,7 @@ class User{
 
     /**
      * Set firstName
-     *
      * @param string $firstName
-     *
      * @return User
      */
     public function setFirstName($firstName)

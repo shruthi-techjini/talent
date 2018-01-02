@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RegisterType extends AbstractType{
 	
@@ -16,27 +17,28 @@ class RegisterType extends AbstractType{
 		$builder
 		->add('firstName', null, array(
 				'label' => false,
+				'required'=> true,
 				'attr' => array(
 						'class' => 'form-control',
 						'placeholder' => 'First Name'
 				)))
 		->add('lastName', null, array(
 				'label' => false,
+				'constraints' => array(
+						new NotNull()
+				),
 				'attr' => array(
 						'class' => 'form-control',
 						'placeholder' => 'Last Name'
 				)))
 		->add('email', null, array(
 				'label' => false,
+				'constraints' => array(
+						new NotNull()
+				),
 				'attr' => array(
 						'class' => 'form-control',
 						'placeholder' => 'Email Address',
-				)))
-		->add('mobile', null, array(
-				'label' => false,
-				'attr' => array(
-						'class' => 'form-control',
-						'placeholder' => 'Mobile Number',
 				)))
 		->add('password', RepeatedType::class, array(
 				'type' => PasswordType::class,
@@ -70,6 +72,16 @@ class RegisterType extends AbstractType{
 				),
 		))
 				;
+	}
+	
+	public function configureOptions(OptionsResolver $resolver)
+	{
+	
+		$resolver->setDefaults(array(
+				'data_class' => null,
+				'allow_extra_fields' => true,
+		));
+	
 	}
 		 
 	
