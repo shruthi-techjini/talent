@@ -3,13 +3,19 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use AppBundle\Constants\Constants;
+
 
 /**
  * 
  * @author Shruthi
  * @ORM\Entity
+ * @UniqueEntity("email")
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class User{
 	
@@ -48,7 +54,7 @@ class User{
     
     /**
      * @var string
-     * @ORM\Column(name="email", type="string", length=100)
+     * @ORM\Column(name="email", type="string", length=100, unique=true)
      */
     private $email;
     
@@ -135,7 +141,37 @@ class User{
      * @ORM\Column(name="updated_by", type="integer")
      */
     private $updatedBy;
+    
+    /**
+     * @var verificationToken
+     * @ORM\column(name="verification_token", type="string", length=100)
+     */
+    private $verificationToken;
+	
+    
+    /**
+     *
+     * Action to be taken before persist
+     * @ORM\PrePersist
+     *
+     */
+    public function prePersist()
+    {
+    	$this->createdDateTime = new \DateTime();
+    	$this->updatedDateTime = new \DateTime();
+    
+    	if (is_null($this->username)) {
+    		$this->username = uniqid();
+    	}
+    	if (is_null($this->status)) {
+    		$this->status = Constants::USER_STATUS_PENDING;
+    	}
+    	if (is_null($this->type)) {
+    		$this->type = Constants::USER_TYPE_USER;
+    	}
 
+    }
+    
     /**
      * Get id
      *
@@ -598,5 +634,29 @@ class User{
     public function getUpdatedBy()
     {
         return $this->updatedBy;
+    }
+
+    /**
+     * Set verificationToken
+     *
+     * @param string $verificationToken
+     *
+     * @return User
+     */
+    public function setVerificationToken($verificationToken)
+    {
+        $this->verificationToken = $verificationToken;
+
+        return $this;
+    }
+
+    /**
+     * Get verificationToken
+     *
+     * @return string
+     */
+    public function getVerificationToken()
+    {
+        return $this->verificationToken;
     }
 }

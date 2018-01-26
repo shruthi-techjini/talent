@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use AppBundle\Entity\User;
 
 class RegisterType extends AbstractType{
 	
@@ -24,17 +25,19 @@ class RegisterType extends AbstractType{
 				)))
 		->add('lastName', null, array(
 				'label' => false,
-				'constraints' => array(
-						new NotNull()
-				),
+				'required'=> true,
 				'attr' => array(
 						'class' => 'form-control',
 						'placeholder' => 'Last Name'
 				)))
 		->add('email', null, array(
 				'label' => false,
+				'required'=> true,
 				'constraints' => array(
-						new NotNull()
+						new Regex(array(
+								'pattern' => "/^([a-z0-9.])*@gmail.com$/",
+								'message' => 'Please enter a valid email.',
+						))
 				),
 				'attr' => array(
 						'class' => 'form-control',
@@ -78,7 +81,7 @@ class RegisterType extends AbstractType{
 	{
 	
 		$resolver->setDefaults(array(
-				'data_class' => null,
+				'data_class' => User::class,
 				'allow_extra_fields' => true,
 		));
 	

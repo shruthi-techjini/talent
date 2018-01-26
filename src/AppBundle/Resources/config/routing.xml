@@ -16,4 +16,7 @@
     <route id="api_register" path="/api/signup" methods="post">
         <default key="_controller">AppBundle:ApiRegister:register</default>
     </route>
+    <route id="verify_token" path="/verify-token/{token}">
+        <default key="_controller">AppBundle:Register:verifyToken</default>
+    </route>
 </routes>

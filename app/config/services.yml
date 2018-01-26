@@ -33,3 +33,9 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+    
+    mailer_service:
+      class:  AppBundle/Service/MailerService
+      arguments:  ["@service_container"]
+    
+      
