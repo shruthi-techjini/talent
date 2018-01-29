@@ -30,7 +30,6 @@ class User{
     /**
      * @var string
      * @ORM\Column(name="first_name", type="string", length=100)
-     * @Assert\NotBlank()
      */
     private $firstName;
 

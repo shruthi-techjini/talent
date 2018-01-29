@@ -47,7 +47,7 @@ class RegisterType extends AbstractType{
 				'type' => PasswordType::class,
 				'invalid_message' => 'Password should match',
 				'constraints' => array(
-						new NotNull(),
+						//new NotNull(),
 						new Length(array(
 								'min' => 6,
 								'max' => 10,
@@ -85,6 +85,11 @@ class RegisterType extends AbstractType{
 				'allow_extra_fields' => true,
 		));
 	
+	}
+	
+	public function getBlockPrefix()
+	{
+		return '';
 	}
 		 
 	
