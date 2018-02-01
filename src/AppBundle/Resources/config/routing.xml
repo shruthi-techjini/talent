@@ -4,13 +4,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="home" path="/" methods="post">
+    <route id="home" path="/" >
         <default key="_controller">AppBundle:Register:signup</default>
     </route>
     <route id="register" path="/signup" >
         <default key="_controller">AppBundle:Register:signup</default>
     </route>
-    <route path="/register-success" id="register_success">
+    <route id="register_success" path="/register-success">
     	<default key="_controller">AppBundle:Register:registerSuccess</default>
     </route>
     <route id="verify_token" path="/verify-token/{token}">
@@ -23,5 +23,11 @@
     <route id="api_register" path="/api/signup" methods="post">
         <default key="_controller">AppBundle:ApiRegister:register</default>
     </route>
+    
+    <route id="log_in" path="/login">
+        <default key="_controller">AppBundle:Register:login</default>
+    </route>
+    
+    
    
 </routes>

@@ -1,0 +1,30 @@
+{% extends 'register/register_base.html.twig' %}
+
+{% block body %}
+	<div class="reg-body">
+		<div class="col-md-offset-4 col-md-5">
+			<div class="panel panel-default" style="padding:10%">
+              <div class="panel-body">
+              		<div class="text-center"> Log in to I do have Talent </div>
+              		<br/>
+              		<form action="">
+              			<div class="form-group">
+              				<input type="email" name="email" class="form-control" placeholder="Email" />
+              			</div>
+              			<div class="form-group">
+              				<input type="password" name="password" class="form-control" placeholder="Password"/>
+              			</div>
+              			<div>
+              				<input type="submit" name="submit" value="Login" class="btn btn-primary" style="width:100%"/>
+              			</div>
+              			<p> 
+              				<span class="text-left">New user? <a href="{{ path('register') }}">sign in</a></span>
+              				<span class="pull-right"><a href="{{ path('register') }}">Forgot Password? </a> </span>
+              			</p>
+              			
+              		</form>
+              </div>
+            </div>
+		</div>
+	</div>
+{% endblock %}

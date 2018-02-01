@@ -17,33 +17,33 @@ class RegisterController extends Controller{
 
 		$user = new user();
 		$form = $this->createForm(RegisterType::class, $user);
-		$form->submit($request->query->all());
-// 		print_r($request->get('password'));exit;
+		
+		$form->handleRequest($request);
 		
 		if($form->isSubmitted()) {
-			return  $this->redirect($this->generateUrl('register_success'));
 			
+			//$form->submit($request->query->all());
 			if($form->isValid()){
 					
 				$em = $this->getDoctrine()->getManager();
 					
-				$user->setPassword(md5($request->get('password')));
+				$user->setPassword(md5($request->get('password')['first']));
 				$helper = new HelperService($this->container);
 				$token = $helper->generateVerificationToken();
 				$user->setVerificationToken($token);
 				//$em->persist($user);
 				//$em->flush();
 					
-					
+					echo " 1 ";
 				$mailer = new  MailerService($this->container);
 				$mailOptions = array('toEmail'=>$request->get('email'),'firstName'=>$request->get('firstName'),
 						'lastName'=>$request->get('lastName'),
 						'url'=>$this->generateUrl('verify_token',array('token'=>$token),UrlGeneratorInterface::ABSOLUTE_URL)
-				);
+				);echo " 2 ";
 				$mailer->sendRegistrationMail($mailOptions);
-					
-				if($mailer){
-					echo "==";exit;
+					echo " 33 ";
+				if($mailer){echo " 4 ";echo $this->generateUrl('register_success');
+					 $this->redirect($this->generateUrl('register_success'));
 				}else{
 					echo "22";exit;
 				}
@@ -52,7 +52,7 @@ class RegisterController extends Controller{
 		return $this->render('register/signup.html.twig',array('form'=>$form->createView(),'title'=>'Signup'));
 	}
 	
-	public function registerSuccessAction(){
+	public function registerSuccessAction(){ echo " 555 ";exit;
 		return $this->render('register/register_success.html.twig',array('title'=>'Signup Success'));
 	}
 	
@@ -62,15 +62,18 @@ class RegisterController extends Controller{
 		$user = $em->getRepository(User::class)->findOneByVerificationToken($token);
 		
 		if($user instanceof User){
-			$user->setVerificationToken(null);
-			$user->setStatus(Constants::USER_STATUS_VERIFIED);
+			//$user->setVerificationToken(null);
+			//$user->setStatus(Constants::USER_STATUS_VERIFIED);
 			$em->persist($user);
 			$em->flush();
-			echo "you have successfully verified you email";exit;
+			return $this->render('register/token_verify_success.html.twig',array('title'=>'Signup Success'));
 		}else{
-			echo "Invalid token";exit;
+			return $this->render('register/token_verify_failure.html.twig',array('title'=>'Signup Error'));
 		}
-		
+	}
+	
+	public function loginAction(Request $req){
+		return $this->render('register/login.html.twig',array('title'=>'Login'));
 	}
 }
 

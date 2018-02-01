@@ -1,0 +1,16 @@
+{% extends 'register/register_base.html.twig' %}
+
+{% block body %}
+	<div class="reg-body">
+		<div class="col-md-offset-2 col-md-7">
+			<div class="panel panel-default" style="padding:5%">
+              <div class="panel-body">
+              		<p>You have successfully verified your account. Please 
+            			<i><a href="{{ path('log_in') }}">click here </a></i>
+            		to login
+            		</p>
+              </div>
+            </div>
+		</div>
+	</div>
+{% endblock %}
