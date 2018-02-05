@@ -9,8 +9,8 @@
 .reg-logo{
 	font-weight: bolder;
 	font-size:xx-large;
-	padding-top: 40px;
-	padding-left: 20%;
+	padding-top: 2%;
+	padding-left: 10%;
 }
 
 .reg-body{
@@ -18,4 +18,18 @@
 	height: 100%;
 	padding-top: 40px;
 	color: #4D4D4D;
+}
+
+.btn-full{
+	width: 100% !important;
+}
+
+ul {
+	list-style: none !important;
+	padding : 0 !important;
+	
+}
+
+li {
+	color : #e74c3c !important;
 }

@@ -24,9 +24,10 @@
         <default key="_controller">AppBundle:ApiRegister:register</default>
     </route>
     
-    <route id="log_in" path="/login">
-        <default key="_controller">AppBundle:Register:login</default>
+    <route id="login_check" path="/login">
+        <default key="_controller">AppBundle:Security:login</default>
     </route>
+    
     
     
    

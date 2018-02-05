@@ -1,5 +1,15 @@
 {% extends 'register/register_base.html.twig' %}
 
+{% form_theme form _self %}
+
+{% block form_row %}
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+{% endblock %}
+
+
+
 {% block body %}
 	<div class="reg-body">
 		<div class="col-md-offset-1 col-md-6">
@@ -18,7 +28,6 @@
                   </div>
                   <div class="form-group">
 				 	{{ form_row(form.email) }}
-				 	 {{ form_errors(form.email) }}
                   </div>
 				 <div class="form-group">
 				 	{{ form_row(form.password.first) }}
@@ -27,13 +36,12 @@
 				 	{{ form_row(form.password.second) }}
                   </div>
                   <div class="form-group">
-				 	{{ form_row(form.password.second) }}
 				 	 {{ form_errors(form.password) }}
                   </div>
                   
                   <div class="form-group">
-				 	<input type="submit" value="Create an account" class="btn btn-primary"> or
-				 	<a href="" class="btn btn-default">Login</a>
+				 	<input type="submit" value="Create an account" class="btn btn-primary btn-full"> 
+				 	Existing user? <a href="{{ path('log_in') }}" class="">Login</a>
                   </div>
 			</form>
 		</div>
