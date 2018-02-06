@@ -6,6 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Constants\Constants;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
 /**
@@ -17,7 +18,7 @@ use AppBundle\Constants\Constants;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class User{
+class User implements UserInterface{
 	
 	/**
 	 * @var integer
@@ -59,13 +60,13 @@ class User{
     
     /**
      * @var string
-     * @ORM\Column(name="mobile", type="string", length=100)
+     * @ORM\Column(name="mobile", type="string", length=100, nullable = true)
      */
     private $mobile;
 
     /**
      * @var string
-     * @ORM\Column(name="user_token", type="string", length=100)
+     * @ORM\Column(name="user_token", type="string", length=100, nullable = true)
      */
     private $userToken;
    
@@ -83,25 +84,25 @@ class User{
     
     /**
      * @var integer
-     * @ORM\Column(name="gender", type="smallint")
+     * @ORM\Column(name="gender", type="smallint", nullable = true)
      */
     private $gender;
 
     /**
      * @var \DateTime
-     * @ORM\Column(name="dob", type="date")
+     * @ORM\Column(name="dob", type="date", nullable = true)
      */
     private $dob;
     
     /**
      * @var string
-     * @ORM\Column(name="profile_pic", type="text")
+     * @ORM\Column(name="profile_pic", type="text", nullable = true)
      */
     private $profilePic;
 
     /**
      * @var string
-     * @ORM\Column(name="cover_pic", type="text")
+     * @ORM\Column(name="cover_pic", type="text", nullable = true)
      */
     private $coverPic;
     
@@ -113,19 +114,19 @@ class User{
     
     /**
      * @var integer
-     * @ORM\Column(name="created_by", type="integer")
+     * @ORM\Column(name="created_by", type="integer", nullable = true)
      */
     private $createdBy;
 
     /**
      * @var \DateTime
-     * @ORM\Column(name="activated_date_time", type="datetime")
+     * @ORM\Column(name="activated_date_time", type="datetime", nullable = true)
      */
     private $activatedDateTime;
     
     /**
      * @var integer
-     * @ORM\Column(name="activated_by", type="integer")
+     * @ORM\Column(name="activated_by", type="integer", nullable = true)
      */
     private $activatedBy;
 
@@ -137,13 +138,13 @@ class User{
     
     /**
      * @var integer
-     * @ORM\Column(name="updated_by", type="integer")
+     * @ORM\Column(name="updated_by", type="integer",nullable = true)
      */
     private $updatedBy;
     
     /**
      * @var verificationToken
-     * @ORM\column(name="verification_token", type="string", length=100)
+     * @ORM\column(name="verification_token", type="string", length=100, nullable = true)
      */
     private $verificationToken;
 	
@@ -657,5 +658,21 @@ class User{
     public function getVerificationToken()
     {
         return $this->verificationToken;
+    }
+    
+    public function getSalt()
+    {
+    	// you *may* need a real salt depending on your encoder
+    	// see section on salt below
+    	return '';
+    }
+    
+    public function getRoles()
+    {
+    	return array('ROLE_USER');
+    }
+    
+    public function eraseCredentials()
+    {
     }
 }

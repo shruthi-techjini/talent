@@ -24,9 +24,8 @@
         <default key="_controller">AppBundle:ApiRegister:register</default>
     </route>
     
-    <route id="login_check" path="/login">
-        <default key="_controller">AppBundle:Security:login</default>
-    </route>
+    <import resource="@AppBundle/Resources/config/routing/security.xml"/>
+    
     
     
     

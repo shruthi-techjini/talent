@@ -27,7 +27,10 @@ class RegisterController extends Controller{
 					
 				$em = $this->getDoctrine()->getManager();
 					
-				$user->setPassword(md5($request->get('password')['first']));
+				$encoder = $this->container->get('security.password_encoder');
+				$password = $encoder->encodePassword($user, $user->getPassword());
+				$user->setPassword($password);
+				
 				$helper = new HelperService($this->container);
 				$token = $helper->generateVerificationToken();
 				$user->setVerificationToken($token);
@@ -68,20 +71,6 @@ class RegisterController extends Controller{
 		}else{
 			return $this->render('register/token_verify_failure.html.twig',array('title'=>'Signup Error'));
 		}
-	}
-	
-	public function login1Action(Request $req){
-		
-		$user = new User();
-		$form = $this->createForm(LoginType::class,$user);
-		$form->handleRequest($req);
-		
-		if($form->isSubmitted() && $form->isValid()){
-			echo "===";exit;
-		}
-		
-		return $this->render('register/login.html.twig',array('title'=>'Login','form'=>$form->createView()));
-		
 	}
 }
 

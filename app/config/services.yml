@@ -37,10 +37,4 @@ services:
     mailer_service:
       class:  AppBundle/Service/MailerService
       arguments:  ["@service_container"]
-    
-    security.authentication.success_handler:
-      class: AppBundle\Handler\AuthenticationSuccessHandler
-      arguments: ["@security.http_utils", "@service_container"]
-      tags:
-        - { name: 'monolog.logger', channel: 'security'}
       
