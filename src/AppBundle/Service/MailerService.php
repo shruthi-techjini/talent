@@ -19,12 +19,29 @@ class MailerService{
 		$message = (new \Swift_Message('Welcome to I do have Talent'))
 						->setFrom('shruthiindra01@gmail.com')
 						->setTo($options['toEmail'])
-						->setBody(MailTemplates::registerEmial($options),'text/html');
+						->setBody(MailTemplates::registerMail($options),'text/html');
 		
 		try{
 			$mailer->send($message);
 			return true;
 		} 
+		catch (\Exception $e){
+			return false;
+		}
+	}
+	
+	function sendResetPasswordMail($options = array()){
+		$mailer = $this->container->get('mailer');
+		
+		$message = (new \Swift_Message('Reset your password - I do have Talent'))
+					->setFrom('shruthiindra01@gmail.com')
+					->setTo($options['toEmail'])
+					->setBody(MailTemplates::resetPasswordMail($options),'text/html');
+		
+		try{
+			$mailer->send($message);
+			return true;
+		}
 		catch (\Exception $e){
 			return false;
 		}

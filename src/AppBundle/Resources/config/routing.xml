@@ -24,6 +24,14 @@
         <default key="_controller">AppBundle:ApiRegister:register</default>
     </route>
     
+    <route path="/forgot-password" id="forgot_password">
+       <default key="_controller">AppBundle:Password:forgotPassword</default>
+    </route>
+    <route path="/reset-password/{token}" id="reset_password">
+       <default key="_controller">AppBundle:Password:resetPassword</default>
+    </route>
+    
+    
     <import resource="@AppBundle/Resources/config/routing/security.xml"/>
     
     

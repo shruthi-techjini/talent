@@ -30,6 +30,10 @@ ul {
 	
 }
 
-li {
+li, .error {
 	color : #e74c3c !important;
+}
+
+.alert{
+	margin: 0 !important;
 }

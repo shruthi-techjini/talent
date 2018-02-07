@@ -46,4 +46,6 @@ security:
         - { path: ^/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login-check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/signup$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/forgot-password$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/reset-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, role: [ROLE_USER] }

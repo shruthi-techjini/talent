@@ -19,6 +19,15 @@
 		 			<div id="reg-top-bar">
 		 				<div class="reg-logo">I do have Talent</div>
 		 			</div>
+		 			{% if app.session.flashBag.has('success') %}
+		 				<div class="alert alert-success fade in alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+                            {% for msg in app.session.flashBag.get('success') %}
+                                {{ msg }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+		 			
 		 		    {% block body %}{% endblock %}
 		 		</div>
 		 	</div>
