@@ -34,6 +34,7 @@
     
     <import resource="@AppBundle/Resources/config/routing/security.xml"/>
     <import resource="@AppBundle/Resources/config/routing/post.xml" prefix="/post"/>
+    <import resource="@AppBundle/Resources/config/routing/category.xml" prefix="/category"/>
     
     <route path="/my/feed" id="my_feed">
     	<default key="_controller">AppBundle:Feed:myFeed</default>

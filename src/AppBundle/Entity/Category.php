@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
+ * 
+ * @ORM\HasLifecycleCallbacks
  */
 class Category{
 	
@@ -62,7 +64,27 @@ class Category{
      */
     private $updatedBy;
     
+    /**
+     *
+     * Action to be taken before persist
+     * @ORM\PrePersist
+     *
+     */
+    public function prePersist()
+    {
+    	$this->updatedDateTime = new \DateTime();
+    	$this->createdDateTime = new \DateTime();
+    }
     
+    /**
+     *
+     * Action to be taken before update
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+    	$this->updatedDateTime = new \DateTime();
+    }
 	
 
     /**

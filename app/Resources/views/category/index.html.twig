@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Categories list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Createddatetime</th>
+                <th>Createdby</th>
+                <th>Updateddatetime</th>
+                <th>Updatedby</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td><a href="{{ path('category_show', { 'id': category.id }) }}">{{ category.id }}</a></td>
+                <td>{{ category.name }}</td>
+                <td>{{ category.description }}</td>
+                <td>{{ category.status }}</td>
+                <td>{% if category.createdDateTime %}{{ category.createdDateTime|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ category.createdBy }}</td>
+                <td>{% if category.updatedDateTime %}{{ category.updatedDateTime|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ category.updatedBy }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('category_show', { 'id': category.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('category_edit', { 'id': category.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('category_new') }}">Create a new category</a>
+        </li>
+    </ul>
+{% endblock %}
