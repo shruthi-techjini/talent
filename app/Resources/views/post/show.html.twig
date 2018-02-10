@@ -4,77 +4,60 @@
     <div class="panel panel-default">
     	<div class="panel-heading">
     		<h3>{{ post.title }}</h3>
-    		
-        	<a href="{{ path('post_edit', { 'id': post.id }) }}" title="Edit">
-        		<i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
-        	</a>
-        	<a href="{{ path('post_index') }}" title="Back to posts">
-        		<i class="glyphicon glyphicon-arrow-left" aria-hidden="true"></i>
-        	</a>
     	</div>
     	<div class="panel-body">
     		<div class="col-md-4">
-    			 <img src="{{ asset('assets/img/posts/33.jpeg') }}" class="img-responsive"/>
+    			 <img src="{{ asset("assets/img/posts/#{post.image}")}}" class="img-responsive"/>
     		</div>
     		<div class="col-md-8">
+    			<h3>{{ post.title }}
+        			<a href="{{ path('post_edit', { 'id': post.id }) }}" title="Edit" style="font-size: 14px !important;color:grey">
+                		<i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
+                	</a>
+            	</h3> 
+            	<p><i class="glyphicon glyphicon-book" aria-hidden="true"></i> {{ post.language|language }}</p>
+				<p><i class="glyphicon glyphicon-bookmark" aria-hidden="true"></i>  {{ post.subcategoryId|subcategory }}</p>
+				<p><i class="glyphicon glyphicon-tag" aria-hidden="true"></i> {{ post.id|genre }}</p>
+				<p><i class="glyphicon glyphicon-time" aria-hidden="true"></i> {{ post.createdDateTime|date("F jS \\a\\t g:ia")  }}</p>
+				            	
+    		</div>
+    		<br/>
+    		<div class="clearfix"></div>
+    		<div class="col-md-12">
     			{{ post.content }}
     		</div>
+    		<hr>
+    		
+            {% for com in comments %}
+            	<div class="col-md-9">
+            		<div class="col-md-2">
+            			<img src={{ asset("assets/img/users/#{com.userId|userImage}") }} class="img-responsive">
+            		</div>
+            		<div class="col-md-10">
+            			<p color="grey">{{ com.userId|userName }} at {{ com.createdDateTime|date("F jS \\a\\t g:ia")  }}</p>
+            			<p>{{ com.comment }}</p>
+            		</div>
+            		
+            	</div>
+            	<div class="clearfix"></div>
+            {% endfor %}
+    		<div class="col-md-6">
+    			<form action="{{ path('comment') }}" method="post">
+    				<div class="col-md-8">
+        			<input type="text" name="comment" placeholder="Write your comments" class="form-control"/>
+        			<input type="hidden" name="postId" value="{{ post.id }}"/>
+        			</div>
+        			<div class="col-md-4">
+        			<input type="submit" class="btn btn-success" value="Add"/>
+        			</div>
+        		</form>
+        		
+    		</div>
+    		
     		
     	</div>
 		
 	</div>	
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ post.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ post.title }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ post.content }}</td>
-            </tr>
-            <tr>
-                <th>Categoryid</th>
-                <td>{{ post.categoryId }}</td>
-            </tr>
-            <tr>
-                <th>Subcategoryid</th>
-                <td>{{ post.subCategoryId }}</td>
-            </tr>
-            <tr>
-                <th>Userid</th>
-                <td>{{ post.userId }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ post.image }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ post.status }}</td>
-            </tr>
-            <tr>
-                <th>Createddatetime</th>
-                <td>{% if post.createdDateTime %}{{ post.createdDateTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Updateddatetime</th>
-                <td>{% if post.updatedDateTime %}{{ post.updatedDateTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('post_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('post_edit', { 'id': post.id }) }}">Edit</a>
-        </li>
-    </ul>
+   
 {% endblock %}

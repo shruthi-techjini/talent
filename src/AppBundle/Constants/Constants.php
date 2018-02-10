@@ -14,4 +14,8 @@ class Constants{
 	Const POST_STATUS_ACTIVE = 2;
 	Const POST_STATUS_INACTIVE = 3;
 	Const POST_STATUS_DELETED = 4;
+	
+	Const COMMENT_ACTIVE = 1;
+	Const COMMENT_INACTIVE = 2;
+	Const COMMENT_DELETE = 3;
 }

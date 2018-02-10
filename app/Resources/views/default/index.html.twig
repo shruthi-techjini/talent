@@ -3,20 +3,39 @@
 {% block body %}
 
  {% for post in posts %}
- 	<div class="panel panel-default">
+
+	<div class="panel panel-default">
     	<div class="panel-heading">
-    		<h3 style="margin:none !important">{{ post.title }}</h3>
+    		<h3 style="margin:none !important" >{{ post.title }}</h3>
     		<a href="{{ path('post_show', { 'id': post.id }) }}" class="pull-right" style="margin-top:-35px">View full</a>
     	</div>
     	<div class="panel-body">
     		<div class="col-md-4">
-    			 <img src="{{ asset('assets/img/posts/33.jpeg') }}" class="img-responsive"/>
+    			 <img src="{{ asset("assets/img/posts/#{post.image}")}}" class="img-responsive"/>
     		</div>
     		<div class="col-md-8">
-    			{{ post.content }}
+    			<h3>{{ post.title }}
+        			<a href="{{ path('post_edit', { 'id': post.id }) }}" title="Edit" style="font-size: 14px !important;color:grey">
+                		<i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
+                	</a>
+            	</h3> 
+            	<p><i class="glyphicon glyphicon-book" aria-hidden="true"></i> {{ post.language|language }}</p>
+				<p><i class="glyphicon glyphicon-bookmark" aria-hidden="true"></i>  {{ post.subcategoryId|subcategory }}</p>
+				<p><i class="glyphicon glyphicon-tag" aria-hidden="true"></i> {{ post.id|genre }}</p>
+				<p><i class="glyphicon glyphicon-time" aria-hidden="true"></i> {{ post.createdDateTime|date("F jS \\a\\t g:ia")  }}</p>            	
     		</div>
+    		<br/>
+    		<div class="clearfix"></div>
+    		<div class="col-md-12">
+    			{{ post.content | slice(0,200) }}
+    		</div>
+    		
+    		
+    		
     	</div>
+		
 	</div>	
+	
  {% endfor %}	
  				
 				  

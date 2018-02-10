@@ -38,3 +38,9 @@ services:
       class:  AppBundle/Service/MailerService
       arguments:  ["@service_container"]
       
+    App.twig.tag_extension:
+      class: AppBundle/Twig/TagExtension
+      tags:
+        -{  name: twig.extension  }
+    
+      

@@ -14,7 +14,6 @@
                         <th>Id</th>
                         <th>Title</th>
                         <th>Content</th>
-                        <th>Subcategoryid</th>
                         <th>Actions</th>
                     </tr>
     			</thead>
@@ -24,7 +23,6 @@
                             <td><a href="{{ path('post_show', { 'id': post.id }) }}">{{ post.id }}</a></td>
                             <td>{{ post.title }}</td>
                             <td>{{  post.content|slice(0,74)}}...</td>
-                            <td>{{ post.subCategoryId }}</td>
                             <td>
                             	<a href="{{ path('post_show', { 'id': post.id }) }}">
                             		<i class="glyphicon glyphicon-eye-open" aria-hidden="true"> show</i>

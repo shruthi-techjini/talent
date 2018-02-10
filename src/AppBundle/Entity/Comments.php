@@ -2,6 +2,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Constants\Constants;
 
 /**
  * 
@@ -9,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="comments")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentsRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Comments{
 	
@@ -63,7 +65,24 @@ class Comments{
     private $updatedBy;
     
     
-	
+    /**
+     *
+     * Action to be taken before persist
+     * @ORM\PrePersist
+     *
+     */
+    public function prePersist()
+    {
+    	$this->createdDateTime = new \DateTime();
+    	$this->updatedDateTime = new \DateTime();
+    	if (is_null($this->status)) {
+    		$this->status = Constants::COMMENT_ACTIVE;
+    	}
+    	if(is_null($this->userId)){
+    		$this->userId = $this->container->get('security.token_storage')->getToken('user')->getUser()->getId();
+    	}
+    
+    }
 
     /**
      * Get id

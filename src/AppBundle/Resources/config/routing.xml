@@ -47,6 +47,10 @@
         <default key="_controller">AppBundle:Profile:editProfile</default>
     </route>
     
+    <route id="comment" path="/comment">
+        <default key="_controller">AppBundle:Feed:comment</default>
+    </route>
+    
     
     
     

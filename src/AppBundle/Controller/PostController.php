@@ -28,10 +28,12 @@ class PostController extends Controller
 		$user = $this->container->get('security.token_storage')->getToken('user')->getUser()->getId();
 		
 		$posts = $em->getRepository('AppBundle:Post')->findByUserId($user);
-
+		
+		
 		return $this->render('post/index.html.twig', array(
 				'posts' => $posts,
-				'title' => "Post"
+				'title' => "Post",
+				'comments' => $comments
 		));
 	}
 
@@ -112,10 +114,13 @@ class PostController extends Controller
 	 */
 	public function showAction(Post $post)
 	{
-
+		$em = $this->getDoctrine()->getManager();
+		$comments = $em->getRepository('AppBundle:Comments')->findByPostId($post->getId());
+		
 		return $this->render('post/show.html.twig', array(
 				'post' => $post,
-				'title' => "Post"
+				'title' => "Post",
+				'comments' => $comments
 		));
 	}
 
