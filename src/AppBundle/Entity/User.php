@@ -148,6 +148,7 @@ class User implements UserInterface{
      */
     private $verificationToken;
 	
+    private $file;
     
     /**
      *
@@ -674,5 +675,25 @@ class User implements UserInterface{
     
     public function eraseCredentials()
     {
+    }
+    
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile($file)
+    {
+    	$this->file = $file;
+    }
+    
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+    	return $this->file;
     }
 }

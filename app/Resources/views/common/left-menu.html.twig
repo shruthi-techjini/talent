@@ -8,14 +8,24 @@
 		</ul>
 	   
 		<ul class="nav hidden-xs" id="lg-menu">
-			<li class="active"><a href="#featured"><i class="glyphicon glyphicon-list-alt"></i> Featured</a></li>
-			<li><a href="#stories"><i class="glyphicon glyphicon-list"></i> Stories</a></li>
-			<li><a href="#"><i class="glyphicon glyphicon-paperclip"></i> Saved</a></li>
-			<li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Refresh</a></li>
+			<li><a href="{{ path('my_feed') }}"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+			<li><a href="{{ path('post_index') }}"><i class="glyphicon glyphicon-list"></i> Posts</a></li>
+			<li><a href="#featured"><i class="glyphicon glyphicon-list-alt"></i> Followers</a></li>
+			
+			{% if(app.user.type == constant('AppBundle\\Constants\\Constants::USER_TYPE_ADMIN')) %}
+			<li><a href="{{ path('category_index') }}"><i class="glyphicon glyphicon-tag"></i> Category</a></li>
+			<li><a href="{{ path('subcategory_index') }}""><i class="glyphicon glyphicon-tag"></i> Sub Category</a></li>
+			<li><a href="{{ path('languages_index') }}""><i class="glyphicon glyphicon-tag"></i> Language</a></li>
+			<li><a href="{{ path('genre_index') }}""><i class="glyphicon glyphicon-tag"></i> Genre</a></li>
+			{% endif %}
+			
+			
+			
 		</ul>
 		<ul class="list-unstyled hidden-xs" id="sidebar-footer">
 			<li>
-			  <a href="http://usebootstrap.com/theme/facebook"><h3>Bootstrap</h3> <i class="glyphicon glyphicon-heart-empty"></i> Bootply</a>
+				<h4>I do have </h4>
+				<h3>Talent</h3>
 			</li>
 		</ul>
 	  
