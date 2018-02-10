@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="post_index" path="/" methods="GET">
+        <default key="_controller">AppBundle:Post:index</default>
+    </route>
+
+    <route id="post_show" path="/{id}/show" methods="GET">
+        <default key="_controller">AppBundle:Post:show</default>
+    </route>
+
+    <route id="post_new" path="/new" methods="GET|POST">
+        <default key="_controller">AppBundle:Post:new</default>
+    </route>
+
+    <route id="post_edit" path="/{id}/edit" methods="GET|POST">
+        <default key="_controller">AppBundle:Post:edit</default>
+    </route>
+
+    <route id="post_delete" path="/{id}/delete" methods="DELETE">
+        <default key="_controller">AppBundle:Post:delete</default>
+    </route>
+
+</routes>
