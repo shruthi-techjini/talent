@@ -1,7 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Post</h1>
+    <div class="panel panel-default">
+    	<div class="panel-heading">
+    		<h3>{{ post.title }}</h3>
+    		
+        	<a href="{{ path('post_edit', { 'id': post.id }) }}" title="Edit">
+        		<i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
+        	</a>
+        	<a href="{{ path('post_index') }}" title="Back to posts">
+        		<i class="glyphicon glyphicon-arrow-left" aria-hidden="true"></i>
+        	</a>
+    	</div>
+    	<div class="panel-body">
+    		<div class="col-md-4">
+    			 <img src="{{ asset('assets/img/posts/33.jpeg') }}" class="img-responsive"/>
+    		</div>
+    		<div class="col-md-8">
+    			{{ post.content }}
+    		</div>
+    		
+    	</div>
+		
+	</div>	
 
     <table>
         <tbody>

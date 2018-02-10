@@ -24,8 +24,10 @@ class PostController extends Controller
 	public function indexAction()
 	{
 		$em = $this->getDoctrine()->getManager();
-
-		$posts = $em->getRepository('AppBundle:Post')->findAll();
+		
+		$user = $this->container->get('security.token_storage')->getToken('user')->getUser()->getId();
+		
+		$posts = $em->getRepository('AppBundle:Post')->findByUserId($user);
 
 		return $this->render('post/index.html.twig', array(
 				'posts' => $posts,
@@ -79,6 +81,7 @@ class PostController extends Controller
 				$file = $post->getFile();
 				$fileName =$post->getId().'.'.$file->guessExtension();
 				$dirPath = $this->getParameter('post_image_directory');
+				
 				if (!file_exists($dirPath)) {
 					mkdir($dirPath , 0777, true);
 				}
@@ -123,6 +126,14 @@ class PostController extends Controller
 	public function editAction(Request $request, Post $post)
 	{
 		$em = $this->getDoctrine()->getManager();
+
+		$user = $this->container->get('security.token_storage')->getToken('user')->getUser()->getId();
+		$postCheck = $em->getRepository('AppBundle:Post')->findOneBy(array('userId'=>$user,'id'=>$post->getId()));
+
+		if(!$postCheck instanceof Post){
+			return $this->redirectToRoute("my_feed");
+		}
+		
 		$genreArray = array();
 		$genres = $em->getRepository('AppBundle:Genre')->findAll();
 		foreach($genres as $genre){
@@ -134,6 +145,7 @@ class PostController extends Controller
 		foreach($genres as $genre){
 			$selectedGenreArray[$genre->getId()] = $genre->getGenreId();
 		}
+// 		print_r($post->getId());print_r($selectedGenreArray);exit;
 		$editForm = $this->createForm(postType::class, $post, array('genres' => $genreArray,'selectedGenres' => $selectedGenreArray
 		));
 		$editForm->handleRequest($request);
@@ -147,7 +159,7 @@ class PostController extends Controller
 			$genres = $formData['genre'];
 			$diffArray = array_diff($selectedGenreArray, $genres);
 				
-			if(!empty($diffArray)){
+			if($selectedGenreArray !== $genres){
 				$updateGenre = $em->getRepository('AppBundle:PostGenreMapping')->updateOldGenre($post->getId());
 				foreach($genres as $key=>$value){
 					$postGenre = new PostGenreMapping();
@@ -165,8 +177,9 @@ class PostController extends Controller
 
 		return $this->render('post/edit.html.twig', array(
 				'post' => $post,
-				'edit_form' => $editForm->createView(),
+				'form' => $editForm->createView(),
 				'title' => "Update Post",
+				'id' => $post->getId()
 		));
 	}
 }

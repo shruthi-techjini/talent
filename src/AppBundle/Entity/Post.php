@@ -100,6 +100,9 @@ class Post{
     	if (is_null($this->status)) {
     		$this->status = Constants::POST_STATUS_PENDING;
     	}
+    	if(is_null($this->userId)){
+    		$this->userId = $this->container->get('security.token_storage')->getToken('user')->getUser()->getId();
+    	}
     
     }
     
