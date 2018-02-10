@@ -15,7 +15,18 @@
    		 <div class="wrapper">
 		 	<div class="box">
 		 		<div class="row row-offcanvas row-offcanvas-left">
-		 		    {% block body %}{% endblock %}
+		 			
+                    {% include 'common/left-menu.html.twig' %}
+		 			<!-- main right col -->
+					<div class="column col-sm-10 col-xs-11" id="main">
+		 			    {% include 'common/top-menu.html.twig' %}
+		 			    <div class="padding">
+		 			    	<div class="full col-sm-9">
+		 			    	{% block body %}{% endblock %}
+		 			    	</div>
+		 			    </div>
+		 			</div>
+					<!-- /main -->
 		 		</div>
 		 	</div>
 		 </div>
