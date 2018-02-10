@@ -11,6 +11,7 @@ use AppBundle\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class PostType extends AbstractType
 {
@@ -19,8 +20,8 @@ class PostType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-    	$this->categoryId = null;
-    	
+    	$this->genre = $options['genres'];
+    	$this->selectedGenres = $options['selectedGenres'];
     	$builder
     	->add('title', null, array(
     			'label' => 'Title',
@@ -66,49 +67,15 @@ class PostType extends AbstractType
     						'choice_label' => function ($language) {
     						return $language->getName();
     						}
-    						));
-//     		->add('subCategoryId');
-//     		, EntityType::class, array(
-//     				'label' => 'Subcategory Id',
-//     				'empty_data' => null,
-//     				'class' => 'AppBundle\Entity\Subcategory',
-// //     				'choice_label' => '',
-//     				'query_builder' => function ($repository) {
-//     						return $repository->createQueryBuilder('s')
-//     						->where('s.categoryId = :id')
-//     						->setParameter('id', $this->categoryId->getId());
-//     				},
-//     				'choice_label' => function ($subCategory) {
-//     				return $subCategory->getName();
-//     				}
-//     				));
-    		
-//     		$builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($category) {
-//     			$data = $event->getData();
-//     			$form = $event->getForm();
-    		
-// //     			if (is_array($data) && isset($data['categoryId'])) {
-// //     				$this->categoryId = $data['categoryId'];
-// //     			} else if (is_object($data)) {
-// //     				$this->categoryId = $data->getCategoryId();
-// //     			}
-    			
-    		
-//     			$form->add('subCategoryId', EntityType::class, array(
-//     					'label' => 'Subcategory Id',
-//     				'empty_data' => null,
-//     				'class' => 'AppBundle\Entity\Subcategory',
-// //     				'choice_label' => '',
-//     				'query_builder' => function ($repository) {
-//     						return $repository->createQueryBuilder('s')
-//     						->where('s.categoryId = :id')
-//     						->setParameter('id', $this->categoryId);
-//     				},
-//     				'choice_label' => function ($subCategory) {
-//     				return $subCategory->getName();
-//     				}
-//     				));
-//     		});
+    						))
+   			->add('genre', ChoiceType::class, array(
+    					'label' => 'Genre',
+   						'mapped' => false,
+   						'multiple' => true,
+   						'expanded' => true,
+   						'choices' => array_flip($this->genre),
+   						'data' => $this->selectedGenres
+    				));
     }
     
     /**
@@ -117,7 +84,9 @@ class PostType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\post'
+            'data_class' => 'AppBundle\Entity\post',
+        	'genres' => null,
+        	'selectedGenres' => null
         ));
     }
 
@@ -126,7 +95,7 @@ class PostType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return '';
+        return 'post';
     }
 
 

@@ -10,4 +10,21 @@ namespace AppBundle\Repository;
  */
 class PostGenreMappingRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function updateOldGenre($postId)
+	{
+		$em = $this->getEntityManager();
+		$query = $em->createQuery('UPDATE AppBundle:PostGenreMapping a SET a.status = :toStatus
+                      WHERE a.postId = :postId');
+		$query->setParameters(array(
+				'toStatus' => CategoryRepository::STATUS_INACTIVE,
+				'postId' => $postId
+		));
+		try {
+			$genre = $query->execute();
+			/*$account = $query->getResult();*/
+			return $genre;
+		} catch (\Exception $e) {
+			return $e->getMessage();
+		}
+	}
 }

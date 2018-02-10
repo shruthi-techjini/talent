@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="post_genre_mapping")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostGenreMappingRepository")
+ * 
+ * @ORM\HasLifecycleCallbacks
  */
 class PostGenreMapping{
 	
@@ -33,10 +35,43 @@ class PostGenreMapping{
     private $genreId;
     
     /**
+     * @var integer
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
+    
+    /**
      * @var \DateTime
      * @ORM\Column(name="created_date_time", type="datetime")
      */
     private $createdDateTime;
+    
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="updated_date_time", type="datetime")
+     */
+    private $updatedDateTime;
+    
+    /**
+    * Action to be taken before persist
+    * @ORM\PrePersist
+    *
+    */
+    public function prePersist()
+    {
+    	$this->updatedDateTime = new \DateTime();
+    	$this->createdDateTime = new \DateTime();
+    }
+    
+    /**
+     *
+     * Action to be taken before update
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+    	$this->updatedDateTime = new \DateTime();
+    }
 
     /**
      * Get id
@@ -118,5 +153,53 @@ class PostGenreMapping{
     public function getCreatedDateTime()
     {
         return $this->createdDateTime;
+    }
+    
+    /**
+     * Set updatedDateTime
+     *
+     * @param \DateTime $updatedDateTime
+     *
+     * @return Category
+     */
+    public function setUpdatedDateTime($updatedDateTime)
+    {
+    	$this->updatedDateTime = $updatedDateTime;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get updatedDateTime
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedDateTime()
+    {
+    	return $this->updatedDateTime;
+    }
+    
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return Genre
+     */
+    public function setStatus($status)
+    {
+    	$this->status = $status;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+    	return $this->status;
     }
 }

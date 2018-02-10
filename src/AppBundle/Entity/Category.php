@@ -54,7 +54,7 @@ class Category{
 
     /**
      * @var \DateTime
-     * @ORM\Column(name="updateed_date_time", type="datetime")
+     * @ORM\Column(name="updated_date_time", type="datetime")
      */
     private $updatedDateTime;
     

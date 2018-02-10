@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\PostType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use AppBundle\Repository\PostRepository;
+use AppBundle\Entity\PostGenreMapping;
+use AppBundle\Repository\CategoryRepository;
 
 /**
  * Post controller.
@@ -37,14 +39,23 @@ class PostController extends Controller
 	 */
 	public function newAction(Request $request)
 	{
+		$em = $this->getDoctrine()->getManager();
 		$post = new Post();
-		$form = $this->createForm(PostType::class, $post);
+		$genreArray = array();
+		$genres = $em->getRepository('AppBundle:Genre')->findAll();
+		foreach($genres as $genre){
+			$genreArray[$genre->getId()] = $genre->getName();;
+		}
+		$form = $this->createForm(PostType::class, $post,array(
+            'genres' => $genreArray,
+			'selectedGenres' => array()
+				
+        ));
 		$form->handleRequest($request);
+		
 
 		if ($form->isSubmitted() && $form->isValid()) {
-			$em = $this->getDoctrine()->getManager();
 			$user = $this->container->get('security.token_storage')->getToken('user')->getUser()->getId();
-					
 			$post->setCategoryId(1);
 			$post->setSubCategoryId($post->getSubCategoryId()->getId());
 			$post->setLanguage($post->getLanguage()->getId());
@@ -52,6 +63,17 @@ class PostController extends Controller
 			$post->setStatus(PostRepository::STATUS_ACTIVE);
 			$em->persist($post);
 			$em->flush();
+			
+			$formData = $request->request->get('post');
+			$genres = $formData['genre'];
+			foreach($genres as $key=>$value){
+				$postGenre = new PostGenreMapping();
+				$postGenre->setGenreId($genres[$key]);
+				$postGenre->setPostId($post->getId());
+				$postGenre->setStatus(CategoryRepository::STATUS_ACTIVE);
+				$em->persist($postGenre);
+				$em->flush();
+			}
 			
 			try{
 				$file = $post->getFile();
@@ -77,7 +99,7 @@ class PostController extends Controller
 		return $this->render('post/new.html.twig', array(
 				'post' => $post,
 				'form' => $form->createView(),
-				'title' => "Create Post"
+				'title' => "Create Post",
 		));
 	}
 
@@ -87,11 +109,9 @@ class PostController extends Controller
 	 */
 	public function showAction(Post $post)
 	{
-		$deleteForm = $this->createDeleteForm($post);
 
 		return $this->render('post/show.html.twig', array(
 				'post' => $post,
-				'delete_form' => $deleteForm->createView(),
 				'title' => "Post"
 		));
 	}
@@ -102,55 +122,51 @@ class PostController extends Controller
 	 */
 	public function editAction(Request $request, Post $post)
 	{
-		$deleteForm = $this->createDeleteForm($post);
-		$editForm = $this->createForm(postType::class, $post);
+		$em = $this->getDoctrine()->getManager();
+		$genreArray = array();
+		$genres = $em->getRepository('AppBundle:Genre')->findAll();
+		foreach($genres as $genre){
+			$genreArray[$genre->getId()] = $genre->getName();;
+		}
+		
+		$selectedGenreArray = array();
+		$genres = $em->getRepository('AppBundle:PostGenreMapping')->findBy(array('postId'=>$post->getId(), 'status'=>CategoryRepository::STATUS_ACTIVE));
+		foreach($genres as $genre){
+			$selectedGenreArray[$genre->getId()] = $genre->getGenreId();
+		}
+		$editForm = $this->createForm(postType::class, $post, array('genres' => $genreArray,'selectedGenres' => $selectedGenreArray
+		));
 		$editForm->handleRequest($request);
 
 		if ($editForm->isSubmitted() && $editForm->isValid()) {
-			$this->getDoctrine()->getManager()->flush();
+			$post->setCategoryId(1);
+			$post->setSubCategoryId($post->getSubCategoryId()->getId());
+			$post->setLanguage($post->getLanguage()->getId());
+			
+			$formData = $request->request->get('post');
+			$genres = $formData['genre'];
+			$diffArray = array_diff($selectedGenreArray, $genres);
+				
+			if(!empty($diffArray)){
+				$updateGenre = $em->getRepository('AppBundle:PostGenreMapping')->updateOldGenre($post->getId());
+				foreach($genres as $key=>$value){
+					$postGenre = new PostGenreMapping();
+					$postGenre->setGenreId($genres[$key]);
+					$postGenre->setPostId($post->getId());
+					$postGenre->setStatus(CategoryRepository::STATUS_ACTIVE);
+					$em->persist($postGenre);
+					$em->flush();
+				}
+			}
+			$em->flush();
 
-			return $this->redirectToRoute('post_edit', array('id' => $post->getId()));
+			return $this->redirectToRoute('post_show', array('id' => $post->getId()));
 		}
 
 		return $this->render('post/edit.html.twig', array(
 				'post' => $post,
 				'edit_form' => $editForm->createView(),
-				'delete_form' => $deleteForm->createView(),
-				'title' => "Update Post"
+				'title' => "Update Post",
 		));
-	}
-
-	/**
-	 * Deletes a post entity.
-	 *
-	 */
-	public function deleteAction(Request $request, Post $post)
-	{
-		$form = $this->createDeleteForm($post);
-		$form->handleRequest($request);
-
-		if ($form->isSubmitted() && $form->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-			$em->remove($post);
-			$em->flush();
-		}
-
-		return $this->redirectToRoute('post_index');
-	}
-
-	/**
-	 * Creates a form to delete a post entity.
-	 *
-	 * @param post $post The post entity
-	 *
-	 * @return \Symfony\Component\Form\Form The form
-	 */
-	private function createDeleteForm(Post $post)
-	{
-		return $this->createFormBuilder()
-		->setAction($this->generateUrl('post_delete', array('id' => $post->getId())))
-		->setMethod('DELETE')
-		->getForm()
-		;
 	}
 }
