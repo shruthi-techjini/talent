@@ -2,6 +2,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Constants\Constants;
 
 /**
  * 
@@ -52,7 +53,7 @@ class Post{
     
     /**
      * @var string
-     * @ORM\Column(name="image", type="text")
+     * @ORM\Column(name="image", type="text", nullable = true)
      */
     private $image;
     
@@ -74,6 +75,24 @@ class Post{
      */
     private $updatedDateTime;
 
+    /**
+     *
+     * Action to be taken before persist
+     * @ORM\PrePersist
+     *
+     */
+    public function prePersist()
+    {
+    	$this->createdDateTime = new \DateTime();
+    	$this->updatedDateTime = new \DateTime();
+    	$this->userId = 1;//$this->getUser()->getId();
+    	
+    	if (is_null($this->status)) {
+    		$this->status = Constants::POST_STATUS_PENDING;
+    	}
+    
+    }
+    
     /**
      * Get id
      *

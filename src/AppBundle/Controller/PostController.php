@@ -6,6 +6,7 @@ use AppBundle\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\PostType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Post controller.
@@ -41,9 +42,21 @@ class PostController extends Controller
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
+			
+			$post->setCategoryId(1);
+			$post->setSubCategoryId(1);
+		$post->setUserId(2);
+		$post->setStatus(1);
+		$post->setCreatedDateTime(new \DateTime());
+		$post->setUpdatedDateTime(new \DateTime());
 			$em->persist($post);
 			$em->flush();
+			
+			$file = $post->getImage();
+			print_r($file);
+			echo $file['file']->guessExtension();
 
+			echo $post->getId();exit;
 			return $this->redirectToRoute('post_show', array('id' => $post->getId()));
 		}
 
