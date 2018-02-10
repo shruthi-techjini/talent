@@ -5,10 +5,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * 
- * @author Shruhti
+ * @author Shrutti
  * @ORM\Entity
  * @ORM\Table(name="genre")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GenreRepository")
+ * 
+ * @ORM\HasLifecycleCallbacks
  */
 class Genre{
 	
@@ -19,12 +21,6 @@ class Genre{
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var integer
-     * @ORM\Column(name="user_id", type="integer")
-     */
-    private $userId;
 
     /**
      * @var string
@@ -50,7 +46,39 @@ class Genre{
      */
     private $createdDateTime;
     
-	
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="updateed_date_time", type="datetime")
+     */
+    private $updatedDateTime;
+    
+    /**
+     * @var integer
+     * @ORM\Column(name="updated_by", type="integer")
+     */
+    private $updatedBy;
+    
+    /**
+     *
+     * Action to be taken before persist
+     * @ORM\PrePersist
+     *
+     */
+    public function prePersist()
+    {
+    	$this->updatedDateTime = new \DateTime();
+    	$this->createdDateTime = new \DateTime();
+    }
+    
+    /**
+     *
+     * Action to be taken before update
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+    	$this->updatedDateTime = new \DateTime();
+    }
 
     /**
      * Get id
@@ -180,5 +208,53 @@ class Genre{
     public function getCreatedDateTime()
     {
         return $this->createdDateTime;
+    }
+    
+    /**
+    * Set updatedDateTime
+    *
+    * @param \DateTime $updatedDateTime
+    *
+    * @return Category
+    */
+    public function setUpdatedDateTime($updatedDateTime)
+    {
+    	$this->updatedDateTime = $updatedDateTime;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get updatedDateTime
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedDateTime()
+    {
+    	return $this->updatedDateTime;
+    }
+    
+    /**
+     * Set updatedBy
+     *
+     * @param  $updatedBy
+     *
+     * @return Category
+     */
+    public function setUpdatedBy($updatedBy)
+    {
+    	$this->updatedBy = $updatedBy;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get updatedBy
+     *
+     * @return
+     */
+    public function getUpdatedBy()
+    {
+    	return $this->updatedBy;
     }
 }

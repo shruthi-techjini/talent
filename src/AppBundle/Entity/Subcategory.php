@@ -9,7 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="subcategory")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SubcategoryRepository")
+ * 
+ * @ORM\HasLifecycleCallbacks
  */
+
 class Subcategory{
 	
 	/**
@@ -67,6 +70,28 @@ class Subcategory{
      * @ORM\Column(name="updated_by", type="integer")
      */
     private $updatedBy;
+    
+    /**
+     *
+     * Action to be taken before persist
+     * @ORM\PrePersist
+     *
+     */
+    public function prePersist()
+    {
+    	$this->updatedDateTime = new \DateTime();
+    	$this->createdDateTime = new \DateTime();
+    }
+    
+    /**
+     *
+     * Action to be taken before update
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+    	$this->updatedDateTime = new \DateTime();
+    }
 
     /**
      * Get id

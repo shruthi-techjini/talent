@@ -40,6 +40,9 @@ class CategoryController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+        	$user = $this->container->get('security.token_storage')->getToken('user')->getUser()->getId();
+        	$category->setCreatedBy($user);
+        	$category->setUpdatedBy($user);
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();
@@ -76,9 +79,11 @@ class CategoryController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+        	$user = $this->container->get('security.token_storage')->getToken('user')->getUser()->getId();
+        	$category->setUpdatedBy($user);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('category_edit', array('id' => $category->getId()));
+            return $this->redirectToRoute('category_show', array('id' => $category->getId()));
         }
 
         return $this->render('category/edit.html.twig', array(

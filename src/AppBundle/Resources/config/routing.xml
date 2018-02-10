@@ -36,6 +36,8 @@
     <import resource="@AppBundle/Resources/config/routing/post.xml" prefix="/post"/>
     <import resource="@AppBundle/Resources/config/routing/category.xml" prefix="/category"/>
     <import resource="@AppBundle/Resources/config/routing/genre.xml" prefix="/genre"/>
+	<import resource="@AppBundle/Resources/config/routing/subcategory.xml" prefix="/subcategory"/>
+    <import resource="@AppBundle/Resources/config/routing/languages.xml" prefix="/languages"/>
     
     <route path="/my/feed" id="my_feed">
     	<default key="_controller">AppBundle:Feed:myFeed</default>

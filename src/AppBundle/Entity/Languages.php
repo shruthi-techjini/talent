@@ -9,8 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="language")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\LanguagesRepository")
+ * 
+ * @ORM\HasLifecycleCallbacks
  */
-class Language{
+class Languages{
 	
 	/**
 	 * @var integer
@@ -43,6 +45,40 @@ class Language{
      * @ORM\Column(name="created_date_time", type="datetime")
      */
     private $createdDateTime;
+    
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="updated_date_time", type="datetime")
+     */
+    private $updatedDateTime;
+    
+    /**
+     * @var integer
+     * @ORM\Column(name="updated_by", type="integer")
+     */
+    private $updatedBy;
+    
+    /**
+     *
+     * Action to be taken before persist
+     * @ORM\PrePersist
+     *
+     */
+    public function prePersist()
+    {
+    	$this->updatedDateTime = new \DateTime();
+    	$this->createdDateTime = new \DateTime();
+    }
+    
+    /**
+     *
+     * Action to be taken before update
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+    	$this->updatedDateTime = new \DateTime();
+    }
     
 	
 
@@ -174,5 +210,53 @@ class Language{
     public function getCreatedDateTime()
     {
         return $this->createdDateTime;
+    }
+    
+    /**
+     * Set updatedDateTime
+     *
+     * @param \DateTime $updatedDateTime
+     *
+     * @return Category
+     */
+    public function setUpdatedDateTime($updatedDateTime)
+    {
+    	$this->updatedDateTime = $updatedDateTime;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get updatedDateTime
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedDateTime()
+    {
+    	return $this->updatedDateTime;
+    }
+    
+    /**
+     * Set updatedBy
+     *
+     * @param  $updatedBy
+     *
+     * @return Category
+     */
+    public function setUpdatedBy($updatedBy)
+    {
+    	$this->updatedBy = $updatedBy;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get updatedBy
+     *
+     * @return
+     */
+    public function getUpdatedBy()
+    {
+    	return $this->updatedBy;
     }
 }
