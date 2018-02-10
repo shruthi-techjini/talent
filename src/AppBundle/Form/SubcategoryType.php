@@ -9,6 +9,7 @@ use AppBundle\Repository\CategoryRepository;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class SubcategoryType extends AbstractType
 {
@@ -20,7 +21,19 @@ class SubcategoryType extends AbstractType
        	$builder->add('name',TextType::class, array('label' => 'Name', 'required' => true))
       			->add('description',TextareaType::class, array('label' => 'Name', 'required' => true))
         		->add('status',ChoiceType::class, array('label' => 'Status', 'required' => true, 'choices' => array_flip(CategoryRepository::$statusArray)))
-        		->add('categoryId',ChoiceType::class, array('label' => 'Category', 'required' => true, 'choices' => array_flip(CategoryRepository::$statusArray)));
+//         		->add('categoryId',ChoiceType::class, array('label' => 'Category', 'required' => true, 'choices' => array_flip(CategoryRepository::$statusArray)));
+        		->add('categoryId', EntityType::class, array(
+        				'label' => 'Category',
+        				'class' => 'AppBundle\Entity\Category',
+        				'query_builder' => function ($repository) {
+        				return $repository->createQueryBuilder('c')
+        				->where('c.status = :status')
+        				->setParameter('status', CategoryRepository::STATUS_ACTIVE);
+        				},
+        				'choice_label' => function ($category) {
+        				return $category->getName();
+        				}
+        				));
     }
     
     /**

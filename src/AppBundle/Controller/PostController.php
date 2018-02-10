@@ -46,7 +46,8 @@ class PostController extends Controller
 			$user = $this->container->get('security.token_storage')->getToken('user')->getUser()->getId();
 					
 			$post->setCategoryId(1);
-			$post->setSubCategoryId(1);
+			$post->setSubCategoryId($post->getSubCategoryId()->getId());
+			$post->setLanguage($post->getLanguage()->getId());
 			$post->setUserId($user);
 			$post->setStatus(PostRepository::STATUS_ACTIVE);
 			$em->persist($post);
@@ -68,7 +69,7 @@ class PostController extends Controller
 				$em->flush();
 			}catch (\Exception $e){
 				$this->container->get('session')->getFlashBag()
-				->add('Account Test status changed successfully, but mail sending failed, please check the mail log and send the email manually.');
+				->add('error','Account Test status changed successfully, but mail sending failed, please check the mail log and send the email manually.');
 			}
 			return $this->redirectToRoute('post_show', array('id' => $post->getId()));
 		}

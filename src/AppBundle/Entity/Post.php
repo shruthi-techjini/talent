@@ -49,6 +49,12 @@ class Post{
 
     /**
      * @var integer
+     * @ORM\Column(name="language", type="integer")
+     */
+    private $language;
+    
+    /**
+     * @var integer
      * @ORM\Column(name="user_id", type="integer")
      */
     private $userId;
@@ -351,5 +357,29 @@ class Post{
     public function getFile()
     {
     	return $this->file;
+    }
+
+    /**
+     * Set language
+     *
+     * @param integer $language
+     *
+     * @return Post
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return integer
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 }

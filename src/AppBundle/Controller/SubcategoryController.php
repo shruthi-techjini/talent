@@ -42,6 +42,7 @@ class SubcategoryController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $user = $this->container->get('security.token_storage')->getToken('user')->getUser()->getId();
+            $subcategory->setCategoryId($subcategory->getCategoryId()->getId());
             $subcategory->setCreatedBy($user);
             $subcategory->setUpdatedBy($user);
             $em->persist($subcategory);
