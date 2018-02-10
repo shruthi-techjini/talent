@@ -34,6 +34,10 @@
     
     <import resource="@AppBundle/Resources/config/routing/security.xml"/>
     
+    <route path="/my/feed" id="my_feed">
+    	<default key="_controller">AppBundle:Feed:myFeed</default>
+    </route>
+    
     
     
     
