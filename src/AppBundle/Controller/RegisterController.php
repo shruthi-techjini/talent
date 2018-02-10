@@ -22,7 +22,6 @@ class RegisterController extends Controller{
 		$form->handleRequest($request);
 		
 		if($form->isSubmitted()) {
-			
 			if($form->isValid()){
 					
 				$em = $this->getDoctrine()->getManager();

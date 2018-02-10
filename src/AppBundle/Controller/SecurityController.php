@@ -33,7 +33,7 @@ class SecurityController extends Controller
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
        // print_r($lastUsername);exit;
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_ANONYMOUSLY')) {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
         	//Redirect to myaccount
         	return  $this->redirect($this->generateUrl('my_feed'));
         }

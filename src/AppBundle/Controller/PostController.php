@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\PostType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use AppBundle\Repository\PostRepository;
 
 /**
  * Post controller.
@@ -42,21 +43,33 @@ class PostController extends Controller
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
-			
+			$user = $this->container->get('security.token_storage')->getToken('user')->getUser()->getId();
+					
 			$post->setCategoryId(1);
 			$post->setSubCategoryId(1);
-		$post->setUserId(2);
-		$post->setStatus(1);
-		$post->setCreatedDateTime(new \DateTime());
-		$post->setUpdatedDateTime(new \DateTime());
+			$post->setUserId($user);
+			$post->setStatus(PostRepository::STATUS_ACTIVE);
 			$em->persist($post);
 			$em->flush();
 			
-			$file = $post->getImage();
-			print_r($file);
-			echo $file['file']->guessExtension();
-
-			echo $post->getId();exit;
+			try{
+				$file = $post->getFile();
+				$fileName =$post->getId().'.'.$file->guessExtension();
+				$dirPath = $this->getParameter('post_image_directory');
+				if (!file_exists($dirPath)) {
+					mkdir($dirPath , 0777, true);
+				}
+				$file->move(
+						$dirPath,
+						$fileName
+						);
+				$post->setImage($fileName);
+				$em->persist($post);
+				$em->flush();
+			}catch (\Exception $e){
+				$this->container->get('session')->getFlashBag()
+				->add('Account Test status changed successfully, but mail sending failed, please check the mail log and send the email manually.');
+			}
 			return $this->redirectToRoute('post_show', array('id' => $post->getId()));
 		}
 

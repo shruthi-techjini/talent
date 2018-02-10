@@ -10,6 +10,8 @@ use AppBundle\Constants\Constants;
  * @ORM\Entity
  * @ORM\Table(name="post")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
+ * 
+ * @ORM\HasLifecycleCallbacks
  */
 class Post{
 	
@@ -74,6 +76,10 @@ class Post{
      * @ORM\Column(name="updateed_date_time", type="datetime")
      */
     private $updatedDateTime;
+    
+    /**
+     */
+    private $file;
 
     /**
      *
@@ -85,12 +91,20 @@ class Post{
     {
     	$this->createdDateTime = new \DateTime();
     	$this->updatedDateTime = new \DateTime();
-    	$this->userId = 1;//$this->getUser()->getId();
-    	
     	if (is_null($this->status)) {
     		$this->status = Constants::POST_STATUS_PENDING;
     	}
     
+    }
+    
+    /**
+     *
+     * Action to be taken before update
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+    	$this->updatedDateTime = new \DateTime();
     }
     
     /**
@@ -317,5 +331,25 @@ class Post{
     public function getUpdatedDateTime()
     {
         return $this->updatedDateTime;
+    }
+    
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile($file)
+    {
+    	$this->file = $file;
+    }
+    
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+    	return $this->file;
     }
 }

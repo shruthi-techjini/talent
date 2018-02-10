@@ -19,7 +19,7 @@
 		<div class="col-md-4">
 			<b>Create an Account</b>
 			<br/>
-			<form action="{{ path('home') }}" method = "post">
+			<form action="{{ path('register') }}" method = "post">
 				 <div class="form-group">
 				 	{{ form_row(form.firstName) }}
                   </div>
@@ -41,7 +41,7 @@
                   
                   <div class="form-group">
 				 	<input type="submit" value="Create an account" class="btn btn-primary btn-full"> 
-				 	Existing user? <a href="{{ path('login_check') }}" class="">Login</a>
+				 	Existing user? <a href="{{ path('login') }}" class="">Login</a>
                   </div>
 			</form>
 		</div>

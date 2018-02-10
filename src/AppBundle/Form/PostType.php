@@ -31,12 +31,11 @@ class PostType extends AbstractType
     					'attr' => array(
     							'class' => 'form-control',
     							'placeholder' => 'Write your complete post here'
-    					)))
-    					->add('image',FileType::class,array(
-    							'label' => 'Image',
-    							'required' => false,
-    							
-    					))
+    			)))
+    			->add('file',FileType::class,array(
+    					'label' => 'Image',
+   						'required' => false,
+    			))
     			
     		->add('categoryId')->add('subCategoryId');
     }

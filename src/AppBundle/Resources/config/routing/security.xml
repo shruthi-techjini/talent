@@ -4,9 +4,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-	 <route id="login_check" path="/login">
+	 <route id="login" path="/login">
        <default key="_controller">AppBundle:Security:login</default>
      </route>
+     
+     <route id="login_check" path="/login_check">
+     </route>
          
-   
+   	 <route id="logout" path="/logout">
+     </route>
 </routes>
