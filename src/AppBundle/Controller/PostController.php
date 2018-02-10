@@ -22,8 +22,10 @@ class PostController extends Controller
 	public function indexAction()
 	{
 		$em = $this->getDoctrine()->getManager();
-
-		$posts = $em->getRepository('AppBundle:Post')->findAll();
+		
+		$user = $this->container->get('security.token_storage')->getToken('user')->getUser()->getId();
+		
+		$posts = $em->getRepository('AppBundle:Post')->findByUserId($user);
 
 		return $this->render('post/index.html.twig', array(
 				'posts' => $posts,
@@ -56,6 +58,7 @@ class PostController extends Controller
 				$file = $post->getFile();
 				$fileName =$post->getId().'.'.$file->guessExtension();
 				$dirPath = $this->getParameter('post_image_directory');
+				
 				if (!file_exists($dirPath)) {
 					mkdir($dirPath , 0777, true);
 				}
@@ -101,21 +104,35 @@ class PostController extends Controller
 	 */
 	public function editAction(Request $request, Post $post)
 	{
+		$em = $this->getDoctrine()->getManager();
+		$user = $this->container->get('security.token_storage')->getToken('user')->getUser()->getId();
+		$postCheck = $em->getRepository('AppBundle:Post')->findBy(array('userId'=>$user,'id'=>$post->getId()));
+
+		if(!$postCheck instanceof Post){
+			return $this->redirectToRoute("my_feed");
+		}
+		
 		$deleteForm = $this->createDeleteForm($post);
 		$editForm = $this->createForm(postType::class, $post);
 		$editForm->handleRequest($request);
 
 		if ($editForm->isSubmitted() && $editForm->isValid()) {
-			$this->getDoctrine()->getManager()->flush();
+			
+			$post->setCategoryId(1);
+			$post->setSubCategoryId(1);
+			$post->setStatus(PostRepository::STATUS_ACTIVE);
+			$em->persist($post);
+			$em->flush();
 
-			return $this->redirectToRoute('post_edit', array('id' => $post->getId()));
+			return $this->redirectToRoute('post_index');
 		}
 
 		return $this->render('post/edit.html.twig', array(
 				'post' => $post,
-				'edit_form' => $editForm->createView(),
+				'form' => $editForm->createView(),
 				'delete_form' => $deleteForm->createView(),
-				'title' => "Update Post"
+				'title' => "Update Post",
+				'id' => $post->getId()
 		));
 	}
 

@@ -1,55 +1,42 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Posts list</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Categoryid</th>
-                <th>Subcategoryid</th>
-                <th>Userid</th>
-                <th>Image</th>
-                <th>Status</th>
-                <th>Createddatetime</th>
-                <th>Updateddatetime</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for post in posts %}
-            <tr>
-                <td><a href="{{ path('post_show', { 'id': post.id }) }}">{{ post.id }}</a></td>
-                <td>{{ post.title }}</td>
-                <td>{{ post.content }}</td>
-                <td>{{ post.categoryId }}</td>
-                <td>{{ post.subCategoryId }}</td>
-                <td>{{ post.userId }}</td>
-                <td>{{ post.image }}</td>
-                <td>{{ post.status }}</td>
-                <td>{% if post.createdDateTime %}{{ post.createdDateTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if post.updatedDateTime %}{{ post.updatedDateTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('post_show', { 'id': post.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('post_edit', { 'id': post.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('post_new') }}">Create a new post</a>
-        </li>
-    </ul>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="center">List of all the post</h2>
+			<a class="btn btn-success pull-right" href="{{ path('post_new') }}" style="margin-top:-45px;">Create a new post</a>
+		</div>
+		
+		<div class="panel-body table-responsive">
+			<table class="table table-hover">
+    			<thead>
+    				<tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Subcategoryid</th>
+                        <th>Actions</th>
+                    </tr>
+    			</thead>
+    			<tbody>
+    				 {% for post in posts %}
+                        <tr>
+                            <td><a href="{{ path('post_show', { 'id': post.id }) }}">{{ post.id }}</a></td>
+                            <td>{{ post.title }}</td>
+                            <td>{{  post.content|slice(0,74)}}...</td>
+                            <td>{{ post.subCategoryId }}</td>
+                            <td>
+                            	<a href="{{ path('post_show', { 'id': post.id }) }}">
+                            		<i class="glyphicon glyphicon-eye-open" aria-hidden="true"> show</i>
+                            	</a>
+                            	<br/>
+                            	<a href="{{ path('post_edit', { 'id': post.id }) }}">
+                            		<i class="glyphicon glyphicon-pencil" aria-hidden="true"> edit</i>
+                            	</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+    			</tbody>
+		</div>
+	</div>
 {% endblock %}
