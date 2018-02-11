@@ -30,7 +30,7 @@ security:
                 check_path:     /login_check
                 failure_path:   null
                 always_use_default_target_path: true
-                default_target_path:  register_success
+                default_target_path:  my_feed
             logout:
                 path:   /logout
                 target: /
