@@ -47,7 +47,7 @@ class LanguagesController extends Controller
             $em->persist($language);
             $em->flush();
 
-            return $this->redirectToRoute('languages_show', array('id' => $language->getId()));
+            return $this->redirectToRoute('languages_index');
         }
 
         return $this->render('languages/new.html.twig', array(
@@ -83,13 +83,14 @@ class LanguagesController extends Controller
         	$language->setUpdatedBy($user);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('languages_show', array('id' => $language->getId()));
+            return $this->redirectToRoute('languages_index');
         }
 
         return $this->render('languages/edit.html.twig', array(
             'language' => $language,
-            'edit_form' => $editForm->createView(),
-        	'title'=>'Languages'
+            'form' => $editForm->createView(),
+        	'title'=>'Languages',
+        	'id'=>$language->getId()
         ));
     }
 }

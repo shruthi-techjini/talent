@@ -17,9 +17,27 @@ class CategoryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        	$builder->add('name',TextType::class, array('label' => 'Name', 'required' => true))
-        	->add('description',TextareaType::class, array('label' => 'Name', 'required' => true))
-        	->add('status',ChoiceType::class, array('label' => 'Status', 'required' => true, 'choices' => array_flip(CategoryRepository::$statusArray)));
+        	$builder
+        	->add('name', null, array(
+        			'label' => 'Name',
+        			'required'=> true,
+        			'attr' => array(
+        					'class' => 'form-control',
+        			)))
+        			->add('description', TextareaType::class, array(
+        					'label' => 'Body',
+        					'required'=> true,
+        					'attr' => array(
+        							'class' => 'form-control',
+        					)))
+        					->add('status', ChoiceType::class, array(
+        							'label' => 'Status',
+        							'required'=> true,
+        							'choices' => array_flip(CategoryRepository::$statusArray),
+        							'attr' => array(
+        									'class' => 'form-control',
+        							)));
+        							 
     }
     
     /**

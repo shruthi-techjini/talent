@@ -48,7 +48,7 @@ class SubcategoryController extends Controller
             $em->persist($subcategory);
             $em->flush();
 
-            return $this->redirectToRoute('subcategory_show', array('id' => $subcategory->getId()));
+            return $this->redirectToRoute('subcategory_index');
         }
 
         return $this->render('subcategory/new.html.twig', array(
@@ -85,13 +85,14 @@ class SubcategoryController extends Controller
         	$subcategory->setUpdatedBy($user);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('subcategory_show', array('id' => $subcategory->getId()));
+            return $this->redirectToRoute('subcategory_edit');
         }
 
         return $this->render('subcategory/edit.html.twig', array(
             'subcategory' => $subcategory,
-            'edit_form' => $editForm->createView(),
-        	'title'=>'Subcategory'
+            'form' => $editForm->createView(),
+        	'title'=>'Subcategory',
+        	'id'=>$subcategory->getId()
         ));
     }
 }

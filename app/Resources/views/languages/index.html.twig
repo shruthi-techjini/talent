@@ -1,45 +1,43 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Languages list</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Createdby</th>
-                <th>Createddatetime</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for language in languages %}
-            <tr>
-                <td><a href="{{ path('languages_show', { 'id': language.id }) }}">{{ language.id }}</a></td>
-                <td>{{ language.name }}</td>
-                <td>{{ language.status }}</td>
-                <td>{{ language.createdBy }}</td>
-                <td>{% if language.createdDateTime %}{{ language.createdDateTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('languages_show', { 'id': language.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('languages_edit', { 'id': language.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('languages_new') }}">Create a new language</a>
-        </li>
-    </ul>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="center">List of all genres</h2>
+			<a class="btn btn-success pull-right" href="{{ path('language_new') }}" style="margin-top:-45px;">Create a new language</a>
+		</div>
+		
+		<div class="panel-body table-responsive">
+			<table class="table table-hover">
+    			<thead>
+    				<tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+    			</thead>
+    			<tbody>
+    				 {% for category in languages %}
+                        <tr>
+                            <td>{{ category.id }}</td>
+                            <td>{{ category.name }}</td>
+                            <td>
+{#                             	<a href="{{ path('category_show', { 'id': category.id }) }}">#}
+{#                             		<i class="glyphicon glyphicon-eye-open" aria-hidden="true"> show</i>#}
+{#                             	</a>#}
+{#                             	<br/>#}
+                            	<a href="{{ path('language_edit', { 'id': category.id }) }}">
+                            		<i class="glyphicon glyphicon-pencil" aria-hidden="true"> edit</i>
+                            	</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+    			</tbody>
+		</div>
+	</div>
 {% endblock %}
+
+
+
+
+

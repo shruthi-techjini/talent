@@ -21,9 +21,9 @@ class SecurityController extends Controller
      */
     public function loginAction(Request $request)
     {
-
         $authenticationUtils = $this->get('security.authentication_utils');
-
+        
+        
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error) {
@@ -32,7 +32,7 @@ class SecurityController extends Controller
         }
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-       // print_r($lastUsername);exit;
+       //print_r($lastUsername);exit;
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
         	//Redirect to myaccount
         	return  $this->redirect($this->generateUrl('my_feed'));

@@ -47,7 +47,7 @@ class CategoryController extends Controller
             $em->persist($category);
             $em->flush();
 
-            return $this->redirectToRoute('category_show', array('id' => $category->getId()));
+            return $this->redirectToRoute('category_index', array('id' => $category->getId()));
         }
 
         return $this->render('category/new.html.twig', array(
@@ -83,13 +83,14 @@ class CategoryController extends Controller
         	$category->setUpdatedBy($user);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('category_show', array('id' => $category->getId()));
+            return $this->redirectToRoute('category_index', array('id' => $category->getId()));
         }
 
         return $this->render('category/edit.html.twig', array(
             'category' => $category,
-            'edit_form' => $editForm->createView(),
-        	'title'=>'Category'
+            'form' => $editForm->createView(),
+        	'title'=>'Category',
+        	'id' => $category->getId()
         ));
     }
 }

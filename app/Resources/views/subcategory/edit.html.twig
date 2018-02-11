@@ -1,16 +1,66 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme form _self %}
+
+{% block form_row %}
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+{% endblock %}
+
 {% block body %}
-    <h1>Subcategory edit</h1>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="center" style="padding-left: 14%;">Subcategory modification</h2>
+		</div>
+		
+		<div class="panel-body">
+    		<form class="form-horizontal" action="{{ path('subcategory_edit',{'id':id}) }}"  method="post">
+                <div class="form-group">
+                	<div class="col-sm-3" style="padding-left: 15%;">
+                		{{ form_label(form.name) }}
+                	</div>
+                      <div class="col-sm-5">
+            			{{ form_widget(form.name) }}
+            		  </div>
+                </div>
+                <div class="form-group">
+                	<div class="col-sm-3" style="padding-left: 15%;">
+                		{{ form_label(form.description) }}
+                	</div>
+                    <div class="col-sm-5">
+            			{{ form_widget(form.description) }}
+            		</div>
+                </div>
+                <div class="form-group">
+                	<div class="col-sm-3" style="padding-left: 15%;">
+                		{{ form_label(form.status) }}
+                	</div>
+                    <div class="col-sm-5">
+            			{{ form_widget(form.status) }}
+            		</div>
+                </div>
+                
+                <div class="form-group">
+                	<div class="col-sm-3" style="padding-left: 15%;">
+                		{{ form_label(form.categoryId) }}
+                	</div>
+                    <div class="col-sm-5">
+            			{{ form_widget(form.categoryId) }}
+            		</div>
+                </div>
+                
+                
+           		<br/>
+                <div class="form-group">        
+                  <div class="col-sm-offset-3 col-sm-10">
+                    <button type="submit" class="btn btn-success">Edit Subcategory</button>
+                    <a href="{{ path('subcategory_index') }}" class="btn btn-default">Back to the list</a>
+                  </div>
+                </div>
+          </form>	
+		</div>
+	</div>
 
-    <ul>
-        <li>
-            <a href="{{ path('subcategory_index') }}">Back to the list</a>
-        </li>
-    </ul>
 {% endblock %}
