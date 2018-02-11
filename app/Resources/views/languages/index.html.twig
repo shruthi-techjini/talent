@@ -4,7 +4,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h2 class="center">List of all genres</h2>
-			<a class="btn btn-success pull-right" href="{{ path('language_new') }}" style="margin-top:-45px;">Create a new language</a>
+			<a class="btn btn-success pull-right" href="{{ path('languages_new') }}" style="margin-top:-45px;">Create a new language</a>
 		</div>
 		
 		<div class="panel-body table-responsive">
@@ -26,7 +26,7 @@
 {#                             		<i class="glyphicon glyphicon-eye-open" aria-hidden="true"> show</i>#}
 {#                             	</a>#}
 {#                             	<br/>#}
-                            	<a href="{{ path('language_edit', { 'id': category.id }) }}">
+                            	<a href="{{ path('languages_edit', { 'id': category.id }) }}">
                             		<i class="glyphicon glyphicon-pencil" aria-hidden="true"> edit</i>
                             	</a>
                             </td>

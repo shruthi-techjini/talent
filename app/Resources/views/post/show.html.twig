@@ -24,7 +24,10 @@
     		<br/>
     		<div class="clearfix"></div>
     		<div class="col-md-12">
-    			{{ post.content }}
+    			<pre style="background-color:#ffffff !important; border : none !important">
+    				{{post.content | raw }}
+    			</pre>
+    			
     		</div>
     		<hr>
     		

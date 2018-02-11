@@ -33,7 +33,7 @@ class PostController extends Controller
 		return $this->render('post/index.html.twig', array(
 				'posts' => $posts,
 				'title' => "Post",
-				'comments' => $comments
+				
 		));
 	}
 
