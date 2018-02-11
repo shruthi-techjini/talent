@@ -1,53 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Subcategories list</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Createddatetime</th>
-                <th>Categoryid</th>
-                <th>Createdby</th>
-                <th>Updateddatetime</th>
-                <th>Updatedby</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for subcategory in subcategories %}
-            <tr>
-                <td><a href="{{ path('subcategory_show', { 'id': subcategory.id }) }}">{{ subcategory.id }}</a></td>
-                <td>{{ subcategory.name }}</td>
-                <td>{{ subcategory.description }}</td>
-                <td>{{ subcategory.status }}</td>
-                <td>{% if subcategory.createdDateTime %}{{ subcategory.createdDateTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ subcategory.categoryId }}</td>
-                <td>{{ subcategory.createdBy }}</td>
-                <td>{% if subcategory.updatedDateTime %}{{ subcategory.updatedDateTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ subcategory.updatedBy }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('subcategory_show', { 'id': subcategory.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('subcategory_edit', { 'id': subcategory.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('subcategory_new') }}">Create a new subcategory</a>
-        </li>
-    </ul>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="center">List of all the subcategories</h2>
+			<a class="btn btn-success pull-right" href="{{ path('subcategory_new') }}" style="margin-top:-45px;">Create a new subcategory</a>
+		</div>
+		
+		<div class="panel-body table-responsive">
+			<table class="table table-hover">
+    			<thead>
+    				<tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+    			</thead>
+    			<tbody>
+    				 {% for category in subcategories %}
+                        <tr>
+                            <td>{{ category.id }}</td>
+                            <td>{{ category.name }}</td>
+                            <td>{{  category.description}}</td>
+                            <td>
+{#                             	<a href="{{ path('category_show', { 'id': category.id }) }}">#}
+{#                             		<i class="glyphicon glyphicon-eye-open" aria-hidden="true"> show</i>#}
+{#                             	</a>#}
+{#                             	<br/>#}
+                            	<a href="{{ path('subcategory_edit', { 'id': category.id }) }}">
+                            		<i class="glyphicon glyphicon-pencil" aria-hidden="true"> edit</i>
+                            	</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+    			</tbody>
+		</div>
+	</div>
 {% endblock %}
+
+
+
+
+

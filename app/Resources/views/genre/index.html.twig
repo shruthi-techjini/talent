@@ -1,45 +1,43 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Genres list</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Createdby</th>
-                <th>Createddatetime</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for genre in genres %}
-            <tr>
-                <td><a href="{{ path('genre_show', { 'id': genre.id }) }}">{{ genre.id }}</a></td>
-                <td>{{ genre.name }}</td>
-                <td>{{ genre.status }}</td>
-                <td>{{ genre.createdBy }}</td>
-                <td>{% if genre.createdDateTime %}{{ genre.createdDateTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('genre_show', { 'id': genre.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('genre_edit', { 'id': genre.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('genre_new') }}">Create a new genre</a>
-        </li>
-    </ul>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="center">List of all genres</h2>
+			<a class="btn btn-success pull-right" href="{{ path('genre_new') }}" style="margin-top:-45px;">Create a new genre</a>
+		</div>
+		
+		<div class="panel-body table-responsive">
+			<table class="table table-hover">
+    			<thead>
+    				<tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+    			</thead>
+    			<tbody>
+    				 {% for category in genres %}
+                        <tr>
+                            <td>{{ category.id }}</td>
+                            <td>{{ category.name }}</td>
+                            <td>
+{#                             	<a href="{{ path('category_show', { 'id': category.id }) }}">#}
+{#                             		<i class="glyphicon glyphicon-eye-open" aria-hidden="true"> show</i>#}
+{#                             	</a>#}
+{#                             	<br/>#}
+                            	<a href="{{ path('genre_edit', { 'id': category.id }) }}">
+                            		<i class="glyphicon glyphicon-pencil" aria-hidden="true"> edit</i>
+                            	</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+    			</tbody>
+		</div>
+	</div>
 {% endblock %}
+
+
+
+
+

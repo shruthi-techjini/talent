@@ -47,7 +47,7 @@ class GenreController extends Controller
             $em->persist($genre);
             $em->flush();
 
-            return $this->redirectToRoute('genre_show', array('id' => $genre->getId()));
+            return $this->redirectToRoute('genre_index');
         }
 
         return $this->render('genre/new.html.twig', array(
@@ -83,13 +83,14 @@ class GenreController extends Controller
         	$genre->setUpdatedBy($user);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('genre_show', array('id' => $genre->getId()));
+            return $this->redirectToRoute('genre_index');
         }
 
         return $this->render('genre/edit.html.twig', array(
             'genre' => $genre,
-            'edit_form' => $editForm->createView(),
-        	'title'=>'Genre'	
+            'form' => $editForm->createView(),
+        	'title'=>'Genre',
+        	'id'=>$genre->getId()
         ));
     }
 }
