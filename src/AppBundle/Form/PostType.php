@@ -44,6 +44,9 @@ class PostType extends AbstractType
     			
     		->add('subCategoryId', EntityType::class, array(
     				'label' => 'Category',
+    				'attr' => array(
+    						'class' => 'form-control',
+    				),
       				'class' => 'AppBundle\Entity\Subcategory',
     				'query_builder' => function ($repository) {
     				return $repository->createQueryBuilder('c')
@@ -58,6 +61,9 @@ class PostType extends AbstractType
     		
     		->add('language', EntityType::class, array(
     						'label' => 'Language',
+		    				'attr' => array(
+		    						'class' => 'form-control',
+		    				),
     						'class' => 'AppBundle\Entity\Languages',
     						'query_builder' => function ($repository) {
     						return $repository->createQueryBuilder('c')
