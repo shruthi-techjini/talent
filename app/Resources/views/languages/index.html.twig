@@ -13,6 +13,7 @@
     				<tr>
                         <th>Id</th>
                         <th>Name</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
     			</thead>
@@ -21,6 +22,7 @@
                         <tr>
                             <td>{{ category.id }}</td>
                             <td>{{ category.name }}</td>
+                            <td>{{ category.status | status }}</td>
                             <td>
 {#                             	<a href="{{ path('category_show', { 'id': category.id }) }}">#}
 {#                             		<i class="glyphicon glyphicon-eye-open" aria-hidden="true"> show</i>#}

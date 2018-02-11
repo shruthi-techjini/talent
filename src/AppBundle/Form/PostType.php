@@ -76,6 +76,9 @@ class PostType extends AbstractType
     						))
    			->add('genre', ChoiceType::class, array(
     					'label' => 'Genre',
+   					'attr' => array(
+   							'class' => 'form-control',
+   					),
    						'mapped' => false,
    						'multiple' => true,
    						'expanded' => true,

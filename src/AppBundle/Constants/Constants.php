@@ -18,4 +18,10 @@ class Constants{
 	Const COMMENT_ACTIVE = 1;
 	Const COMMENT_INACTIVE = 2;
 	Const COMMENT_DELETE = 3;
+	
+	public static $statusArray = array(
+		self::COMMENT_ACTIVE => 'Active',
+		self::COMMENT_INACTIVE => 'Inactive',
+		self::COMMENT_DELETE => 'Delete'
+	);
 }

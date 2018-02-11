@@ -13,7 +13,9 @@
     				<tr>
                         <th>Id</th>
                         <th>Name</th>
+                        <th>Status</th>
                         <th>Description</th>
+                        <th>Category</th>
                         <th>Actions</th>
                     </tr>
     			</thead>
@@ -22,7 +24,9 @@
                         <tr>
                             <td>{{ category.id }}</td>
                             <td>{{ category.name }}</td>
+                            <td>{{ category.status | status }}</td>
                             <td>{{  category.description}}</td>
+                            <td>{{  category.categoryId | category}}</td>
                             <td>
 {#                             	<a href="{{ path('category_show', { 'id': category.id }) }}">#}
 {#                             		<i class="glyphicon glyphicon-eye-open" aria-hidden="true"> show</i>#}

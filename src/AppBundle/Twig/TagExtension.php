@@ -21,7 +21,8 @@ class TagExtension extends \Twig_Extension{
 				new \Twig_SimpleFilter('genre', array($this, 'genreFilter')),
 				new \Twig_SimpleFilter('userImage', array($this, 'userImageFilter')),
 				new \Twig_SimpleFilter('userName', array($this, 'userNameFilter')),
-				
+				new \Twig_SimpleFilter('status', array($this, 'statusFilter')),
+				new \Twig_SimpleFilter('category', array($this, 'categoryFilter')),
 		);
 	
 		return $filters;
@@ -67,6 +68,17 @@ class TagExtension extends \Twig_Extension{
 	public  function userNameFilter($id){
 		$user = $this->getContainer()->get('doctrine')->getRepository('AppBundle:User')->findOneById($id);
 		return $user->getFirstName()." ".$user->getLastName();
+	}
+	
+	public  function statusFilter($id){
+		$status = Constants::$statusArray[$id];
+		return $status;
+	}
+	
+	public function categoryFilter($id)
+	{
+		$category = $this->getContainer()->get('doctrine')->getRepository('AppBundle:Category')->findOneById($id);
+		return $category->getName();
 	}
 	
 	public function getName()
