@@ -2,6 +2,7 @@
 namespace AppBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use AppBundle\Constants\Constants;
 
 class TagExtension extends \Twig_Extension{
 	
@@ -20,7 +21,8 @@ class TagExtension extends \Twig_Extension{
 				new \Twig_SimpleFilter('genre', array($this, 'genreFilter')),
 				new \Twig_SimpleFilter('userImage', array($this, 'userImageFilter')),
 				new \Twig_SimpleFilter('userName', array($this, 'userNameFilter')),
-				
+				new \Twig_SimpleFilter('status', array($this, 'statusFilter')),
+				new \Twig_SimpleFilter('category', array($this, 'categoryFilter')),
 		);
 	
 		return $filters;
@@ -59,13 +61,24 @@ class TagExtension extends \Twig_Extension{
 	}
 	
 	public  function userImageFilter($id){
-		$user = $this->getContainer()->get('doctrine')->getRepository('AppBundle:User')->findOneById($id);
+		$user = $this->getContainer()->get('doctrine')->getRepository('AppBundle:UserProfile')->findOneBy(array('userId'=>$id,'status'=>Constants::COMMENT_ACTIVE));
 		return $user->getProfilePic();
 	}
 	
 	public  function userNameFilter($id){
 		$user = $this->getContainer()->get('doctrine')->getRepository('AppBundle:User')->findOneById($id);
 		return $user->getFirstName()." ".$user->getLastName();
+	}
+	
+	public  function statusFilter($id){
+		$status = Constants::$statusArray[$id];
+		return $status;
+	}
+	
+	public function categoryFilter($id)
+	{
+		$category = $this->getContainer()->get('doctrine')->getRepository('AppBundle:Category')->findOneById($id);
+		return $category->getName();
 	}
 	
 	public function getName()

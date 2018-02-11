@@ -28,6 +28,7 @@ class PostController extends Controller
 		$user = $this->container->get('security.token_storage')->getToken('user')->getUser()->getId();
 		
 		$posts = $em->getRepository('AppBundle:Post')->findByUserId($user);
+		$comments = $em->getRepository('AppBundle:Comments')->findByUserId($user);
 		
 		
 		return $this->render('post/index.html.twig', array(
