@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
 use AppBundle\Form\EditProfileType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use AppBundle\Entity\UserProfile;
+use AppBundle\Constants\Constants;
 
 
 class ProfileController extends Controller{
@@ -19,19 +21,14 @@ class ProfileController extends Controller{
 		if($user->getId() != $existingUser){
 			return $this->redirectToRoute("my_feed");
 		}
-		
-		
-		$form = $this->createForm(EditProfileType::class, $user);
+		$userProfile = new UserProfile();
+		$form = $this->createForm(EditProfileType::class, $userProfile);
 		$form->handleRequest($req);
 		
 		if ($form->isSubmitted() && $form->isValid()) {
-			
-			
-			$em->persist($user);
-			$em->flush();
-			
 			try{
-				$file = $user->getFile();
+				
+				$file = $userProfile->getImageFile();
 				$fileName =$user->getId().'.'.$file->guessExtension();
 				$dirPath = $this->getParameter('user_image_directory');
 			
@@ -42,9 +39,14 @@ class ProfileController extends Controller{
 						$dirPath,
 						$fileName
 						);
-				$user->setProfilePic($fileName);
-				$em->persist($user);
+				$userProfile->setProfilePic($fileName);
+				$userProfile->setUserId($existingUser);
+				$userProfile->setStatus(Constants::COMMENT_ACTIVE);
+				$em->persist($userProfile);
 				$em->flush();
+				
+				$updateGenre = $em->getRepository('AppBundle:UserProfile')->updateOldProfileImage($existingUser,$userProfile->getId());
+				
 			}catch (\Exception $e){
 				$this->container->get('session')->getFlashBag()
 				->add('error','Account Test status changed successfully, but mail sending failed, please check the mail log and send the email manually.');

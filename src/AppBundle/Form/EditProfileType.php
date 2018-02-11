@@ -9,6 +9,7 @@ use AppBundle\Repository\CategoryRepository;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use AppBundle\Entity\UserProfile;
 
 class EditProfileType extends AbstractType
 {
@@ -18,32 +19,32 @@ class EditProfileType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-		->add('firstName', null, array(
-				'label' => 'First Name',
-				'required'=> true,
-				'attr' => array(
-						'class' => 'form-control',
-						'placeholder' => 'First Name'
-				)))
-				->add('lastName', null, array(
-						'label' => 'Last Name',
-						'required'=> true,
-						'attr' => array(
-								'class' => 'form-control',
-								'placeholder' => 'Last Name'
-						)))
-						->add('email', null, array(
-								'label' => 'Email',
-								'required'=> true,
-								'disabled'=>true,
-								'attr' => array(
-										'class' => 'form-control',
-										'placeholder' => 'Email Address',
-								)))
+// 			->add('userId', null, array(
+// 				'label' => 'First Name',
+// 				'required'=> true,
+// 				'attr' => array(
+// 						'class' => 'form-control',
+// 						'placeholder' => 'First Name'
+// 				)))
+// 			->add('lastName', null, array(
+// 						'label' => 'Last Name',
+// 						'required'=> true,
+// 						'attr' => array(
+// 								'class' => 'form-control',
+// 								'placeholder' => 'Last Name'
+// 						)))
+// 			->add('email', null, array(
+// 								'label' => 'Email',
+// 								'required'=> true,
+// 								'disabled'=>true,
+// 								'attr' => array(
+// 										'class' => 'form-control',
+// 										'placeholder' => 'Email Address',
+// 								)))
 								
-								->add('file',FileType::class,array(
-										'label'=>'Profile Pic'
-								));
+			->add('imageFile',FileType::class,array(
+					'label'=>'Profile Pic',
+			));
 		
 	}
 	
@@ -53,7 +54,7 @@ class EditProfileType extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(array(
-				'data_class' => 'AppBundle\Entity\User'
+				'data_class' => UserProfile::class
 		));
 	}
 	
@@ -62,7 +63,7 @@ class EditProfileType extends AbstractType
 	 */
 	public function getBlockPrefix()
 	{
-		return '';
+		return 'user_profile';
 	}
 	
 }

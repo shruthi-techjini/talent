@@ -2,12 +2,6 @@
 
 {% form_theme form _self %}
 
-{% block form_row %}
-        {{ form_label(form) }}
-        {{ form_widget(form) }}
-        {{ form_errors(form) }}
-{% endblock %}
-
 {% block body %}
 
 	<div class="panel panel-default">
@@ -17,38 +11,38 @@
 		
 		<div class="panel-body">
     		<form class="form-horizontal" action="{{ path('edit_profile',{ 'id': id }) }}" enctype="multipart/form-data" method="post">
-                <div class="form-group">
-                	<div class="col-sm-3" style="padding-left: 15%;">
-                		{{ form_label(form.firstName) }}
-                	</div>
-                      <div class="col-sm-5">
-            			{{ form_widget(form.firstName) }}
-            		  </div>
-                </div>
-                <div class="form-group">
-                	<div class="col-sm-3" style="padding-left: 15%;">
-                		{{ form_label(form.lastName) }}
-                	</div>
-                    <div class="col-sm-5">
-            			{{ form_widget(form.lastName) }}
-            		</div>
-                </div>
+{#                 <div class="form-group">#}
+{#                 	<div class="col-sm-3" style="padding-left: 15%;">#}
+{#                 		{{ form_label(form.userId) }}#}
+{#                 	</div>#}
+{#                       <div class="col-sm-5">#}
+{#             			{{ form_widget(form.userId) }}#}
+{#             		  </div>#}
+{#                 </div>#}
+{#                 <div class="form-group">#}
+{#                 	<div class="col-sm-3" style="padding-left: 15%;">#}
+{#                 		{{ form_label(form.lastName) }}#}
+{#                 	</div>#}
+{#                     <div class="col-sm-5">#}
+{#             			{{ form_widget(form.lastName) }}#}
+{#             		</div>#}
+{#                 </div>#}
                 
-                <div class="form-group">
-                	<div class="col-sm-3" style="padding-left: 15%;">
-                		{{ form_label(form.email) }}
-                	</div>
-                    <div class="col-sm-5">
-            			{{ form_widget(form.email) }}
-            		</div>
-                </div>
+{#                 <div class="form-group">#}
+{#                 	<div class="col-sm-3" style="padding-left: 15%;">#}
+{#                 		{{ form_label(form.email) }}#}
+{#                 	</div>#}
+{#                     <div class="col-sm-5">#}
+{#             			{{ form_widget(form.email) }}#}
+{#             		</div>#}
+{#                 </div>#}
                
                 <div class="form-group">
                 	<div class="col-sm-3" style="padding-left:15%">
-                		{{ form_label(form.file) }}
+                		{{ form_label(form.imageFile) }}
                 	</div>
                 	<div class="col-sm-5">
-                		{{ form_widget(form.file) }}
+                		{{ form_widget(form.imageFile) }}
                 	</div>
                 </div>
             
