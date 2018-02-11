@@ -16,7 +16,7 @@
 		</div>
 		
 		<div class="panel-body">
-    		<form class="form-horizontal" action="{{ path('language_new') }}"  method="post">
+    		<form class="form-horizontal" action="{{ path('languages_new') }}"  method="post">
                 <div class="form-group">
                 	<div class="col-sm-3" style="padding-left: 15%;">
                 		{{ form_label(form.name) }}
@@ -38,7 +38,7 @@
                 <div class="form-group">        
                   <div class="col-sm-offset-3 col-sm-10">
                     <button type="submit" class="btn btn-success">Create Language</button>
-                    <a href="{{ path('language_index') }}" class="btn btn-default">Back to the list</a>
+                    <a href="{{ path('languages_index') }}" class="btn btn-default">Back to the list</a>
                   </div>
                 </div>
           </form>	

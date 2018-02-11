@@ -2,6 +2,7 @@
 namespace AppBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use AppBundle\Constants\Constants;
 
 class TagExtension extends \Twig_Extension{
 	
@@ -59,7 +60,7 @@ class TagExtension extends \Twig_Extension{
 	}
 	
 	public  function userImageFilter($id){
-		$user = $this->getContainer()->get('doctrine')->getRepository('AppBundle:User')->findOneById($id);
+		$user = $this->getContainer()->get('doctrine')->getRepository('AppBundle:UserProfile')->findOneBy(array('userId'=>$id,'status'=>Constants::COMMENT_ACTIVE));
 		return $user->getProfilePic();
 	}
 	
