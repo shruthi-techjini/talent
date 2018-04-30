@@ -62,7 +62,10 @@ class TagExtension extends \Twig_Extension{
 	
 	public  function userImageFilter($id){
 		$user = $this->getContainer()->get('doctrine')->getRepository('AppBundle:UserProfile')->findOneBy(array('userId'=>$id,'status'=>Constants::COMMENT_ACTIVE));
+		if($user)
 		return $user->getProfilePic();
+		else 
+			return "";
 	}
 	
 	public  function userNameFilter($id){

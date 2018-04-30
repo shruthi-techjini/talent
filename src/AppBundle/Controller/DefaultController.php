@@ -14,4 +14,8 @@ class DefaultController extends Controller
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig',array('title'=>'home'));
     }
+    
+    public function myPageAction(Request $req){
+    	return $this->render('default/mypage.html.twig',array('title'=>'home'));
+    }
 }

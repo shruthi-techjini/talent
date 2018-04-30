@@ -9,7 +9,7 @@
 	   
 		<ul class="nav hidden-xs" id="lg-menu">
 			<li><a href="{{ path('my_feed') }}"><i class="glyphicon glyphicon-home"></i> Home</a></li>
-			<li><a href="{{ path('post_index') }}"><i class="glyphicon glyphicon-list"></i> Posts</a></li>
+			<li><a href="{{ path('post_index') }}"><i class="glyphicon glyphicon-list"></i> My Posts</a></li>
 {# 			<li><a href="#featured"><i class="glyphicon glyphicon-list-alt"></i> Followers</a></li>#}
 			
 			{% if(app.user.type == constant('AppBundle\\Constants\\Constants::USER_TYPE_ADMIN')) %}
